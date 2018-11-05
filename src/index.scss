@@ -1,0 +1,171 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-family: "Cabin";
+}
+
+body {
+    overflow: hidden;
+}
+
+
+// Template
+
+ul {
+	display: flex;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+    border: 0;
+    transition: 1s;
+}
+
+li {
+    list-style: none;
+}
+
+li>div{
+    width: 100vw;
+    height: 100vh;
+}
+
+// Task Object 
+.taskObj {
+    display: block;
+    width: 300px;
+    height: 450px;
+    //border: 1px solid black;
+    box-shadow: 0 0 60px -32px;
+
+    .content {
+        display: block;
+        margin-left: 5%;
+        position: relative;
+        top: 33%;
+    }
+}
+
+// Task List -- Task List contains several task objects 
+
+#taskList {
+    .taskObj {
+        float: left;
+        margin: 1vw;
+        transform: scale(0.8);
+    }
+}
+
+// styling the form
+
+form {
+    width: 300px;
+    height: 450px;
+    background: teal;
+    box-shadow: 0 0 60px -32px;
+
+    label {
+        display: inline-block;
+        width: 100%;
+    }
+    
+    input {
+        border: none;
+        border-bottom: 1px solid black;
+        background: transparent;
+    }
+
+    input:focus {
+        outline: none;
+    }
+}
+
+// Tag Items  
+
+.tagObj {
+    display: inline-block;
+    margin: 10px;
+    padding: 2px;
+    background: pink;
+    cursor: pointer;
+}
+
+.tagActive {
+    background: yellow;
+}
+
+// Navigation
+
+#nav{
+    display: block;
+    width: 100%;
+    height: 10%;
+    border-top: 0.5px solid rgba(11, 11, 11, 0.5);
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    bottom: 0;
+    z-index: 100;
+    background: white;
+}
+
+#area-titles {
+    display: block;
+    width: 20%;
+    height: 85%;
+    padding-left: 4%;
+    position: relative;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+    overflow: hidden;
+    
+    #title-scroll {
+        width: 100%;
+        height: 100%;
+        position:relative;
+        transform: none;
+        transition: 0.5s;
+    } 
+
+    .title {
+        display: block;
+        width: 100%;
+        height: 100%;
+         
+        span {
+            display: block;
+            position: relative;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+    }
+}
+
+#area-paging {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.area-line {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin: 20px;
+    border-radius: 20px;
+    background: grey;
+    transition: 1s;
+    cursor: pointer;
+}
+
+.area-line-active {
+    width: 20px;
+    height: 5px;
+    border-radius: 20px;
+    background: black;
+}
