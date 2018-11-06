@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //import { BrowserRouter, Route } from 'react-router-dom';
 import CurrentTask from './components/currentTask';
 import Navigation from './components/navigation';
-import AddTask from './components/addTask';
+import TaskForm from './components/taskForm';
 import TaskList from './components/taskList';
 import { connect } from 'react-redux';
 //import { addTask } from './actions/addTask'
@@ -69,8 +69,8 @@ class App extends Component {
         <ul id='template'>
           {/* <li><div><button onClick={this.props.addTask(this.state.tasks[3])}>test</button></div></li> */}
           <li><CurrentTask currentTask={this.state.currentTask}/></li>
-          <li><AddTask addTask={this.addTask} allTags={this.state.allTags}/></li>
-          <li><TaskList tasks={this.state.tasks}/></li>
+          <li><TaskForm /*addTask={this.addTask}*/ /*allTags={this.state.allTags}*//></li>
+          <li><TaskList /></li>
         </ul>
         <Navigation pickTask={this.pickTask}/>
       </div>

@@ -1,6 +1,6 @@
 export const addTask = (task) => {
     return {
-        type: "Add_TASK",
+        type: "ADD_TASK",
         task: task
     }
 }

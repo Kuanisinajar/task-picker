@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import TagObj from './tagObj';
+import { connect } from 'react-redux'
+import { addTask } from '../actions/addTask';
 
-
-class AddTask extends Component {
+class TaskForm extends Component {
 
     state = {
         task: "",
@@ -58,7 +59,7 @@ class AddTask extends Component {
 
     render() {
         return (
-            <div id="addTask">
+            <div id="TaskForm">
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="task">Task: </label>
                     <input type="text" id='task' onChange={this.handleChange} value={this.state.task} autoComplete="off" />
@@ -74,4 +75,16 @@ class AddTask extends Component {
     }
 }
 
-export default AddTask; 
+const mapStateToProps = (state) => {
+    return {
+        allTags: state.allTags
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return{
+        addTask: (task) => { dispatch(addTask(task))}
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskForm); 

@@ -1,8 +1,9 @@
 import React from 'react';
 import TaskObj from './taskObj';
+import { connect } from 'react-redux';
 
 const TaskList = ({tasks}) => {
-
+    console.log(tasks);
     const objects = tasks.length ? (
         tasks.map(tasks => {
             return(
@@ -20,4 +21,10 @@ const TaskList = ({tasks}) => {
     );
 }
 
-export default TaskList;
+const mapStateToProps = (state) => {
+    return {
+        tasks: state.tasks
+    }
+}
+
+export default connect(mapStateToProps)(TaskList);
