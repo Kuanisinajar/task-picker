@@ -17,6 +17,9 @@ const rootReducer = (state = initState, action) => {
                 ...state,
                 tasks: newTasks
             }
+        case "ADD_TAG": 
+            console.log(action.tag);
+            break;
         default: 
             return state
     }

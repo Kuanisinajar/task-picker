@@ -5,7 +5,6 @@ import Navigation from './components/navigation';
 import TaskForm from './components/taskForm';
 import TaskList from './components/taskList';
 import { connect } from 'react-redux';
-//import { addTask } from './actions/addTask'
 
 
 class App extends Component {
@@ -69,7 +68,7 @@ class App extends Component {
         <ul id='template'>
           {/* <li><div><button onClick={this.props.addTask(this.state.tasks[3])}>test</button></div></li> */}
           <li><CurrentTask currentTask={this.state.currentTask}/></li>
-          <li><TaskForm /*addTask={this.addTask}*/ /*allTags={this.state.allTags}*//></li>
+          <li><TaskForm /></li>
           <li><TaskList /></li>
         </ul>
         <Navigation pickTask={this.pickTask}/>
@@ -83,11 +82,5 @@ const mapStateToProps = (state) => {
     ...state
   }
 }
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     addTask: (task) => {dispatch(addTask(task))} 
-//   }
-// }
 
 export default connect(mapStateToProps)(App);

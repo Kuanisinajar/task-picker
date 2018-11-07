@@ -19,7 +19,6 @@ class Navigation extends Component {
     render() {
         return (
             <div id="nav">
-
                 <div id="area-titles">
                     <div id="title-scroll">
                         <div className="title"><span>挑任務</span></div>

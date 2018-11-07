@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import TagObj from './tagObj';
-import { connect } from 'react-redux'
+//import TagObj from './tagObj';
+import { connect } from 'react-redux';
 import { addTask } from '../actions/addTask';
+import TagList from './tagList';
 
 class TaskForm extends Component {
 
@@ -49,13 +50,14 @@ class TaskForm extends Component {
         });
     }
 
-    tagList = this.props.allTags.map(tag => {
-        return (
-            // the key should be considered!
-
-            <TagObj tag={tag} checkTagState={this.checkTagState} key={Math.floor(Math.random() * 100 + Math.random() * 10)} />
-        )
-    });
+    // tagList = this.props.allTags.map((tag, index )=> {
+    //     return (
+    //         // the key should be considered!
+    //         <TagObj tag={tag} 
+    //                 checkTagState={this.checkTagState} 
+    //                 key={index} />
+    //     )
+    // });
 
     render() {
         return (
@@ -67,7 +69,7 @@ class TaskForm extends Component {
                     <input type="text" id='description' onChange={this.handleChange} value={this.state.description} autoComplete="off" />
                     <label htmlFor="tags">Tags: </label>
                     <input type="text" id='tags' onChange={this.handleTags} value={this.state.tags.join(' ')} autoComplete="off" />
-                    {this.tagList}
+                    <TagList checkTagState={this.checkTagState}/>
                     <button>submit</button>
                 </form>
             </div>

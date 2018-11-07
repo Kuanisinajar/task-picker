@@ -3,7 +3,6 @@ import TaskObj from './taskObj';
 import { connect } from 'react-redux';
 
 const TaskList = ({tasks}) => {
-    console.log(tasks);
     const objects = tasks.length ? (
         tasks.map(tasks => {
             return(
