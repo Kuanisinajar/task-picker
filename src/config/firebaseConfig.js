@@ -13,3 +13,5 @@ var config = {
   };
   firebase.initializeApp(config);
   firebase.firestore();
+
+  export default firebase;
