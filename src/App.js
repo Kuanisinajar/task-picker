@@ -4,6 +4,7 @@ import CurrentTask from './components/currentTask';
 import Navigation from './components/navigation';
 import TaskForm from './components/taskForm';
 import TaskList from './components/taskList';
+import Picker from './components/picker';
 import { connect } from 'react-redux';
 
 
@@ -21,52 +22,13 @@ class App extends Component {
     currentTask: null
   }
 
-  
-
-  componentWillMount(){
-    let tags = [...this.state.allTags];
-    for (var i = 0; i < this.state.tasks.length; i++){
-      this.compareTags(this.state.tasks[i].tags, tags, tags);
-    }
-    this.setState({
-      allTags: tags
-    });
-  }
-
-  compareTags = (arr1, arr2, newArr) => {
-    for (let x of arr1){
-      let shouldAdd = true;
-      for(let y of arr2) {
-        if (x === y) {
-          shouldAdd = false;
-        }
-      }
-      if (shouldAdd){
-        newArr.push(x);
-      }
-    }
-  }
-
-  addTask = (task) => {
-    task.id = this.state.tasks.length + 1;
-    const newTasks = [...this.state.tasks, task];
-    this.setState({
-      tasks: newTasks
-    });
-  }
-  
-  pickTask = () => {
-    this.setState({
-      currentTask: this.state.tasks[Math.floor(Math.random() * this.state.tasks.length)]
-    });
-    
-  }
 
   render() {
     return (
       <div className="App">
         <ul id='template'>
           {/* <li><div><button onClick={this.props.addTask(this.state.tasks[3])}>test</button></div></li> */}
+          <li><Picker /></li>
           <li><CurrentTask currentTask={this.state.currentTask}/></li>
           <li><TaskForm /></li>
           <li><TaskList /></li>

@@ -1,5 +1,7 @@
 import React from 'react';
 import TaskObj from './taskObj';
+import { connect } from 'react-redux'
+
 
 const CurrentTask = ({currentTask}) => {
 
@@ -16,4 +18,10 @@ const CurrentTask = ({currentTask}) => {
     )
 }
 
-export default CurrentTask;
+const mapStateToProps = (state) => {
+    return {
+        currentTask: state.currentTask
+    }
+}
+
+export default connect(mapStateToProps)(CurrentTask);

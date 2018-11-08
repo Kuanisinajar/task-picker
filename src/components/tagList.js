@@ -1,27 +1,58 @@
-import React from 'react';
-import TagObj from './tagObj'
+import React, { Component } from 'react';
+import TagObj from './tagObj';
 import { connect } from 'react-redux';
+import { addTag } from '../actions/addTag';
 
-const TagList = ({ allTags, checkTagState }) => {
 
-    const items = allTags.length ? (
-        allTags.map((tag, index) => {
-            return (
-                <TagObj tag={tag}
-                    checkTagState={checkTagState}
-                    key={index} />
-            )
-        })
-    ) : (
-            <p>No tags</p>
-        );
+class TagList extends Component {
+    state = {
+        noNewTag: this.props.noNewTag,
+        input: ""
+    }
 
-    return (
-        <div id="tagList">
-            {items}
-        </div>
-    )
+    handleChange = (e) => {
+        this.setState({
+            input: e.target.value
+        });
+    }
+
+    handleSubmit = (e) => {
+        this.props.addTag(this.state.input);
+        this.setState({
+            input: ""
+        });
+    }
+
+    render() {
+
+        return (
+            <div id="tagList">
+                {this.state.noNewTag ? null : (
+                    <div id="tag-input" className='tagObj'>
+                        <input type="text" onChange={this.handleChange} value={this.state.input} placeholder="New Task" />
+                        <span onClick={this.handleSubmit}>submit</span>
+                    </div>
+                )}
+
+
+                {/* Below run through allTags in props and return TagObj, retun p if nothing*/}
+
+                {this.props.allTags.length ? (
+                    this.props.allTags.map((tag, index) => {
+                        return (
+                            <TagObj tag={tag}
+                                checkTagState={this.props.checkTagState}
+                                key={index} />
+                        )
+                    })
+                ) : (
+                        <p>No tags</p>
+                    )}
+            </div>
+        )
+    }
 }
+
 
 const mapStateToProps = (state) => {
     return {
@@ -29,5 +60,11 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(TagList);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addTag: (tag) => { dispatch(addTag(tag)) }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TagList);
 

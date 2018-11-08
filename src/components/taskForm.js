@@ -61,16 +61,16 @@ class TaskForm extends Component {
 
     render() {
         return (
-            <div id="TaskForm">
-                <form onSubmit={this.handleSubmit}>
+            <div>
+                <form id="taskForm" onSubmit={this.handleSubmit}>
                     <label htmlFor="task">Task: </label>
-                    <input type="text" id='task' onChange={this.handleChange} value={this.state.task} autoComplete="off" />
+                    <input type="text" id='task' onChange={this.handleChange} value={this.state.task} autoComplete="off" form="taskForm" />
                     <label htmlFor="description"> Description</label>
-                    <input type="text" id='description' onChange={this.handleChange} value={this.state.description} autoComplete="off" />
+                    <input type="text" id='description' onChange={this.handleChange} value={this.state.description} autoComplete="off" form="taskForm" />
                     <label htmlFor="tags">Tags: </label>
-                    <input type="text" id='tags' onChange={this.handleTags} value={this.state.tags.join(' ')} autoComplete="off" />
-                    <TagList checkTagState={this.checkTagState}/>
-                    <button>submit</button>
+                    <input type="text" id='tags' onChange={this.handleTags} value={this.state.tags.join(' ')} autoComplete="off" form="taskForm" />
+                    <TagList checkTagState={this.checkTagState} noNewTag={false}/>
+                    <button form="taskForm">submit</button>
                 </form>
             </div>
         )
@@ -85,7 +85,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return{
-        addTask: (task) => { dispatch(addTask(task))}
+        addTask: (task) => { dispatch(addTask(task)) }
     }
 }
 
