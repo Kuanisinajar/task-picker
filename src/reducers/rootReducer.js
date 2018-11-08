@@ -22,6 +22,9 @@ const rootReducer = (state = initState, action) => {
                 ...state,
                 tasks: newTasks
             }
+        case "ADD_TASK_ERROR": 
+            console.log(action.err);
+            return state;
         case "ADD_TAG": 
             // First, check if new tag already exsists
             let shouldAdd = true;
