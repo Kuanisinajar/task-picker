@@ -42,22 +42,14 @@ class TaskForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.addTask(this.state);
+        if (this.props.auth.uid){ this.props.addTask(this.state, this.props.auth.uid) }
+        
         this.setState({
             task: "",
             description: "",
             tags: []
         });
     }
-
-    // tagList = this.props.allTags.map((tag, index )=> {
-    //     return (
-    //         // the key should be considered!
-    //         <TagObj tag={tag} 
-    //                 checkTagState={this.checkTagState} 
-    //                 key={index} />
-    //     )
-    // });
 
     render() {
         return (
@@ -79,13 +71,14 @@ class TaskForm extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        allTags: state.project.allTags
+        allTags: state.project.allTags,
+        auth: state.firebase.auth
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return{
-        addTask: (task) => { dispatch(addTask(task)) }
+        addTask: (task, userId) => { dispatch(addTask(task, userId)) }
     }
 }
 

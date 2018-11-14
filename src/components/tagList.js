@@ -58,7 +58,7 @@ class TagList extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        allTags: state.firestore.data.allTags,
+        allTags: state.project.allTags,
         fire: state.firestore
     }
 }

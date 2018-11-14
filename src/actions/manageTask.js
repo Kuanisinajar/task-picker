@@ -1,10 +1,24 @@
-export const addTask = (task) => {
+export const addTask = (task, userId) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
-
         // async calls to database
         const firestore = getFirestore();
-        firestore.collection('tasks').add({
-            ...task
+        // firestore.collection('tasks').add({
+        //     ...task
+        // }).then(() => {
+        //     dispatch({
+        //         type: "ADD_TASK",
+        //         task: task
+        //     });
+        // }).catch((err) => {
+        //     dispatch({
+        //         type: "ADD_TASK_ERROR",
+        //         err
+        //     });
+        // })
+
+        firestore.collection('users').doc(userId).update({ 
+            // for arrayUnion method check out: https://firebase.google.com/docs/firestore/manage-data/add-data
+            userTasks: firestore.FieldValue.arrayUnion(task)
         }).then(() => {
             dispatch({
                 type: "ADD_TASK",
