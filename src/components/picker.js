@@ -59,9 +59,9 @@ class Picker extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        tasks: state.tasks,
-        allTags: state.allTags,
-        currentTask: state.currentTask
+        tasks: state.project.tasks,
+        allTags: state.project.allTags,
+        currentTask: state.project.currentTask
     }
 }
 

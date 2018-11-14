@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import TagObj from './tagObj';
 import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
 import { addTag } from '../actions/addTag';
 
 
@@ -56,7 +58,8 @@ class TagList extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        allTags: state.allTags
+        allTags: state.firestore.data.allTags,
+        fire: state.firestore
     }
 }
 
@@ -66,5 +69,10 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TagList);
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps), 
+    firestoreConnect([
+        { collection: 'allTags' }
+    ])
+)(TagList);
 

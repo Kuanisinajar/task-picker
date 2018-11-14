@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import TagObj from './tagObj';
 import { connect } from 'react-redux';
-import { addTask } from '../actions/addTask';
+import { addTask } from '../actions/manageTask';
 import TagList from './tagList';
 
 class TaskForm extends Component {
@@ -79,7 +79,7 @@ class TaskForm extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        allTags: state.allTags
+        allTags: state.project.allTags
     }
 }
 

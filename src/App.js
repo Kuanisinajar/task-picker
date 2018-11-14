@@ -5,35 +5,34 @@ import Navigation from './components/navigation';
 import TaskForm from './components/taskForm';
 import TaskList from './components/taskList';
 import Picker from './components/picker';
+import Welcome from './components/welcome';
+import PersonalPanel from './components/personalPanel';
 import { connect } from 'react-redux';
 
 
 class App extends Component {
-  
-  state = {
-    // task object contains properties of id, task, description and tags. Tags are arrays.
-    // example: {id: 0, task: "Buy Milk", description: "Buy Milk", tags: ["housework", "forMon"]}
-    tasks:[
-      {id: 0, task: "Buy Milk", description: "Buy Milk", tags: ["housework", "forMon"]},
-      {id: 1, task: "Buy Tape", description: "Buy Tape", tags: ["housework"]},
-      {id: 2, task: "Buy Candy", description: "Buy Candy", tags: ["housework"]}
-    ],
-    allTags:[1, 2, 3],
-    currentTask: null
-  }
-
 
   render() {
-    return (
-      <div className="App">
+
+    // Serve different component with login state
+    const content = this.props.firebase.auth.uid ? (
+      <div>
         <ul id='template'>
-          {/* <li><div><button onClick={this.props.addTask(this.state.tasks[3])}>test</button></div></li> */}
           <li><Picker /></li>
-          <li><CurrentTask currentTask={this.state.currentTask}/></li>
+          <li><CurrentTask /></li>
           <li><TaskForm /></li>
           <li><TaskList /></li>
         </ul>
-        <Navigation pickTask={this.pickTask}/>
+        <Navigation />
+      </div>
+    ) : (
+        <Welcome />
+      );
+
+    return (
+      <div className="App">
+        {content}
+        <PersonalPanel />
       </div>
     );
   }

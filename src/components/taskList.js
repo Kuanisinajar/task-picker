@@ -1,19 +1,21 @@
 import React from 'react';
 import TaskObj from './taskObj';
 import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
 
-const TaskList = ({tasks}) => {
-    const objects = tasks.length ? (
+const TaskList = ({ tasks }) => {
+    const objects = tasks && tasks.length ? (
         tasks.map(tasks => {
-            return(
+            return (
                 <TaskObj key={tasks.id} tasks={tasks} />
             )
         })
-    ):(
-        <p>No Tasks!</p>
-    );
+    ) : (
+            <p>No Tasks!</p>
+        );
 
-    return(
+    return (
         <div id="taskList">
             {objects}
         </div>
@@ -22,8 +24,14 @@ const TaskList = ({tasks}) => {
 
 const mapStateToProps = (state) => {
     return {
-        tasks: state.tasks
+        tasks: state.firestore.ordered.tasks,
+        fire: state.firestore
     }
 }
 
-export default connect(mapStateToProps)(TaskList);
+export default compose(
+    connect(mapStateToProps),
+    firestoreConnect([
+        { collection: 'tasks' }
+    ])
+)(TaskList);

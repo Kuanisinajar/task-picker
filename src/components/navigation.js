@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 
 
+
 class Navigation extends Component {
 
     handleSelect = (e, i) => {
@@ -12,7 +13,7 @@ class Navigation extends Component {
             item.classList.remove('area-line-active');
         }
         e.target.classList.toggle('area-line-active');
-        titleScroll.style.transform = "translate(0, -" + i * 100 + "%)" 
+        titleScroll.style.transform = "translate(0, -" + i * 100 + "%)"
         template.style.transform = "translate(-" + i * 100 + "%, 0)"
     }
 
@@ -28,17 +29,15 @@ class Navigation extends Component {
                     </div>
                 </div>
                 <div id="area-paging">
-                    <div className="area-line area-line-active" onClick={(e)=>{this.handleSelect(e, 0)}}></div>
-                    <div className="area-line" onClick={(e)=>{this.handleSelect(e, 1)}}></div>
-                    <div className="area-line" onClick={(e)=>{this.handleSelect(e, 2)}}></div>
-                    <div className="area-line" onClick={(e)=>{this.handleSelect(e, 3)}}></div>
+                    <div className="area-line area-line-active" onClick={(e) => { this.handleSelect(e, 0) }}></div>
+                    <div className="area-line" onClick={(e) => { this.handleSelect(e, 1) }}></div>
+                    <div className="area-line" onClick={(e) => { this.handleSelect(e, 2) }}></div>
+                    <div className="area-line" onClick={(e) => { this.handleSelect(e, 3) }}></div>
                 </div>
-                {/* <button onClick={this.props.pickTask}>pick</button>
-                <button>task list</button>
-                <button>current task</button> */}
             </div>
         )
     }
 }
+
 
 export default Navigation;

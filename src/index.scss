@@ -169,3 +169,17 @@ li>div{
     border-radius: 20px;
     background: black;
 }
+
+// Personal Panel
+
+#profile-pic {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#personal-panel {
+    position: fixed;
+    top: 2%;
+    right: 2%;
+}
