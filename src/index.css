@@ -35,25 +35,80 @@ li > div {
 
 .taskObj {
   display: block;
-  width: 300px;
-  height: 450px;
+  width: 440px;
+  height: 600px;
   -webkit-box-shadow: 0 0 60px -32px;
   box-shadow: 0 0 60px -32px;
 }
 
-.taskObj .content {
-  display: block;
-  margin-left: 5%;
-  position: relative;
-  top: 33%;
+.taskObjWrapper {
+  width: 83.2%;
+  height: 100%;
+  padding-left: 16.7%;
+  border: 1px solid grey;
+}
+
+.taskObjWrapper .title {
+  width: 66.6%;
+  padding-top: 33.3%;
+  padding-bottom: 22.2%;
+  font-size: 24px;
+  font-weight: 600;
+  -webkit-transition: 0.5s ease;
+  -o-transition: 0.5s ease;
+  transition: 0.5s ease;
+}
+
+.taskObjWrapper .description {
+  width: 66.6%;
+  height: 22.2%;
+  padding-left: 12.6%;
+  padding-bottom: 33.3%;
+  font-size: 12px;
+}
+
+.taskObjWrapper .tags {
+  position: absolute;
+  bottom: 11.1%;
+}
+
+.taskObjWrapper .closeBtn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.taskObjWrapper .editBtn {
+  width: 40px;
+  height: 40px;
+  margin: 2%;
+  border: none;
+  background: transparent;
+  position: absolute;
+  right: 50px;
+  top: 0;
+}
+
+.taskObjWrapper .editBtn img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+  object-fit: contain;
+}
+
+.taskObjWrapper .editBtn:focus {
+  outline: none;
 }
 
 #taskList .taskObj {
   float: left;
   margin: 1vw;
-  -webkit-transform: scale(0.8);
-  -ms-transform: scale(0.8);
-  transform: scale(0.8);
+  -webkit-transform: scale(0.7);
+  -ms-transform: scale(0.7);
+  transform: scale(0.7);
 }
 
 #taskForm {
@@ -81,9 +136,11 @@ li > div {
 
 .tagObj {
   display: inline-block;
-  margin: 10px;
-  padding: 2px;
-  background: pink;
+  margin: 8px;
+  padding: 8px 10px;
+  border: 1px solid black;
+  background: white;
+  font-size: 10px;
   cursor: pointer;
 }
 
@@ -185,4 +242,227 @@ li > div {
   position: fixed;
   top: 2%;
   right: 2%;
+}
+
+#authPannel {
+  position: fixed;
+  top: 2%;
+  right: 2%;
+}
+
+#signInForm, #signUpForm {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 107;
+}
+
+#signInForm form, #signUpForm form {
+  width: 600px;
+  height: 440px;
+  border: 1px solid black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+#signInForm .authTitle, #signUpForm .authTitle {
+  display: block;
+  text-align: center;
+  padding-top: 10%;
+  padding-bottom: 10%;
+}
+
+#signInForm input, #signUpForm input {
+  display: block;
+  width: 240px;
+  height: 40px;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 4px;
+  border: 1px solid black;
+  background: transparent;
+}
+
+#signInForm input:focus, #signUpForm input:focus {
+  outline: none;
+}
+
+#signInForm button, #signUpForm button {
+  display: block;
+  width: 240px;
+  height: 40px;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 4px;
+  background: rgba(177, 177, 177, 0.8);
+}
+
+#signInForm .closeBtn, #signUpForm .closeBtn {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 2%;
+  top: 2%;
+}
+
+::-webkit-input-placeholder {
+  padding: 20px;
+}
+
+:-ms-input-placeholder {
+  padding: 20px;
+}
+
+::-ms-input-placeholder {
+  padding: 20px;
+}
+
+::placeholder {
+  padding: 20px;
+}
+
+.closeBtn {
+  border-radius: 10px;
+  margin: 2%;
+  -webkit-transform-origin: center center;
+  -ms-transform-origin: center center;
+  transform-origin: center center;
+}
+
+.bar {
+  width: 80%;
+  height: 4%;
+  border-radius: 2px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.bar::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: grey;
+  -webkit-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.bar::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  background: grey;
+  position: absolute;
+  -webkit-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.closeBtn:hover .bar {
+  width: 24px;
+  -webkit-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+.closeBtn:hover .bar::after,
+.closeBtn:hover .bar::before {
+  background: black;
+  -webkit-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+@-webkit-keyframes authPannelAnimation_bg {
+  0% {
+    background: transparent;
+  }
+  100% {
+    background: #ffe646;
+  }
+}
+
+@keyframes authPannelAnimation_bg {
+  0% {
+    background: transparent;
+  }
+  100% {
+    background: #ffe646;
+  }
+}
+
+#picker .wrapper {
+  width: 80%;
+  height: 60%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+#picker .tagWrapper {
+  width: 50%;
+  height: 100%;
+  float: left;
+  border-right: 1px solid rgba(77, 77, 77, 0.5);
+}
+
+#picker .buttonWrapper {
+  width: 49%;
+  float: left;
+}
+
+#picker .buttonWrapper button {
+  position: absolute;
+  bottom: 4%;
+  background: transparent;
+  border: none;
+}
+
+#picker .circle {
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+  border-radius: 50px;
+  background: #ffe646;
+  text-align: center;
+  cursor: pointer;
+}
+
+#picker .circle span {
+  display: inline-block;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  color: white;
+  font-size: 48px;
 }

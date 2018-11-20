@@ -1,3 +1,5 @@
+$mainColor: rgb(255, 230, 70);
+
 html, body {
     width: 100%;
     height: 100%;
@@ -35,16 +37,69 @@ li>div{
 // Task Object 
 .taskObj {
     display: block;
-    width: 300px;
-    height: 450px;
-    //border: 1px solid black;
+    width: 440px;
+    height: 600px;
     box-shadow: 0 0 60px -32px;
+}
 
-    .content {
-        display: block;
-        margin-left: 5%;
-        position: relative;
-        top: 33%;
+.taskObjWrapper {
+    width: 83.2%;
+    height: 100%;
+    padding-left: 16.7%;
+    border: 1px solid grey;
+
+    .title {
+        width: 66.6%;
+        padding-top: 33.3%;
+        padding-bottom: 22.2%;
+        font-size: 24px;
+        font-weight: 600;
+        transition: 0.5s ease;
+    }
+    .description {
+        width: 66.6%;
+        height: 22.2%;
+        padding-left: 12.6%;
+        padding-bottom: 33.3%;
+        font-size: 12px;
+        
+    }
+    .tags {
+        position: absolute;
+        bottom: 11.1%;
+    }
+    .closeBtn {
+        width: 40px;
+        height: 40px;
+        border: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .editBtn {
+        width: 40px;
+        height: 40px;
+        margin: 2%;
+        border: none;
+        background: transparent;
+        position: absolute;
+        right: 50px;
+        top: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+    .editBtn:focus {
+        outline: none;
+    }
+
+}
+.taskObjWrapper:hover {
+    .title {
+ 
     }
 }
 
@@ -54,7 +109,7 @@ li>div{
     .taskObj {
         float: left;
         margin: 1vw;
-        transform: scale(0.8);
+        transform: scale(0.7);
     }
 }
 
@@ -86,9 +141,11 @@ li>div{
 
 .tagObj {
     display: inline-block;
-    margin: 10px;
-    padding: 2px;
-    background: pink;
+    margin: 8px;
+    padding: 8px 10px;
+    border: 1px solid black;
+    background: white;
+    font-size: 10px;
     cursor: pointer;
 }
 
@@ -182,4 +239,192 @@ li>div{
     position: fixed;
     top: 2%;
     right: 2%;
+}
+
+// Auth Pannel
+
+#authPannel {
+    position: fixed;
+    top: 2%;
+    right: 2%;
+}
+
+#signInForm, #signUpForm {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 107;
+
+    form {
+        width: 600px;
+        height: 440px;
+        border: 1px solid black;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        
+    }
+    .authTitle {
+        display: block;
+        text-align: center;
+        padding-top: 10%;
+        padding-bottom: 10%;
+    }
+
+    input {
+        display: block;
+        width: 240px;
+        height: 40px;
+        margin: auto;
+        margin-top: 20px;
+        border-radius: 4px;
+        border: 1px solid black;
+        background: transparent;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    button {
+        display: block;
+        width: 240px;
+        height: 40px;
+        margin: auto;
+        margin-top: 20px;
+        border-radius: 4px;
+
+        background: rgba(177, 177, 177, 0.8);
+    }
+
+    .closeBtn {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        right: 2%;
+        top: 2%;
+    }
+}
+
+::placeholder {
+    padding: 20px;
+}
+
+.closeBtn {
+    border-radius: 10px;
+    margin: 2%;
+    transform-origin: center center;
+}
+
+.bar {
+    width: 80%;
+    height: 4%;
+    border-radius: 2px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bar::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: grey;
+    transform-origin: 50% 50%;
+    transform: rotate(45deg);
+}
+.bar::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background: grey;
+    position: absolute;
+    transform-origin: 50% 50%;
+    transform: rotate(-45deg);
+}
+
+.closeBtn:hover .bar {
+    width: 24px;
+    transition: 0.2s ease;
+}
+.closeBtn:hover .bar::after,
+.closeBtn:hover .bar::before{
+    background: black;
+    transition: 0.2s ease;
+}
+
+
+@keyframes authPannelAnimation_bg {
+    0% {
+        background: transparent;
+    }
+
+    100% {
+        background: $mainColor;
+    }
+
+}
+
+// Picker 
+
+#picker {
+    .wrapper {
+        width: 80%;
+        height: 60%;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .tagWrapper {
+        width: 50%;
+        height: 100%;
+        float: left;
+        border-right: 1px solid rgba(77, 77, 77, 0.5);  
+
+    } 
+
+    .buttonWrapper {
+        width: 49%;
+        float: left;
+        button {
+            position: absolute;
+            bottom: 4%;
+            background: transparent;
+            border: none;
+        }
+    }
+
+    .circle {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        border-radius: 50px;
+        background: $mainColor;
+        text-align: center;
+        cursor: pointer;
+
+        span {
+            display: inline-block;
+            position: relative;
+            top: 50%;
+            transform: translate(0, -50%);
+            color: white;
+            font-size: 48px;
+        }
+    }
 }

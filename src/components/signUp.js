@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { signUp } from '../actions/authAction'
+import { Redirect, Link } from 'react-router-dom';
 
 class SignUp extends Component {
     state = {
@@ -21,9 +22,14 @@ class SignUp extends Component {
     }
 
     render() {
+        if (this.props.auth.uid) {
+            return <Redirect to='/' />
+        }
         return (
             <div id='signUpForm'>
                 <form onSubmit={this.handleSubmit}>
+                    <div className='authTitle'>加入吧！</div>
+                    <Link to='/'><div className='closeBtn'><div className='bar'></div></div></Link>
                     <input type="text" id="email" onChange={this.handleChange} value={this.state.email} placeholder="email" />
                     <input type="text" id='password' onChange={this.handleChange} value={this.state.password} placeholder="password" />
                     <input type="text" id="name" onChange={this.handleChange} value={this.state.name} placeholder="name" />
@@ -44,7 +50,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        signUp: (newUser) => { dispatch(signUp(newUser))}
+        signUp: (newUser) => { dispatch(signUp(newUser)) }
     }
 }
 

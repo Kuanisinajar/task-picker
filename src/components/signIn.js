@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { signIn, signOut } from '../actions/authAction';
+import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class SignIn extends Component {
 
     state = {
         email: "",
         password: ""
+    }
+
+    redirectToHome = () => {
+        return <Redirect to='/' />
     }
 
     handleChange = (e) => {
@@ -21,15 +27,20 @@ class SignIn extends Component {
     }
 
     render() {
+        console.log(this.props);
+        if (this.props.auth.uid) {
+            return <Redirect to='/' />
+        }
         return (
             <div id="signInForm">
                 <form onSubmit={this.handleSubmit}>
-                    <input type="text" id="email" onChange={this.handleChange} value={this.state.email} placeholder="email" />
-                    <input type="text" id='password' onChange={this.handleChange} value={this.state.password} placeholder="password" />
+                    <div className='authTitle'>登入</div>
+                    <Link to='/'><div className='closeBtn'><div className='bar'></div></div></Link>
+                    <input type="text" id="email" onChange={this.handleChange} value={this.state.email} placeholder="帳號" />
+                    <input type="text" id='password' onChange={this.handleChange} value={this.state.password} placeholder="密碼" />
                     <button>Submit</button>
                 </form>
-                <button onClick={() => { this.props.signOut() }}>signout</button>
-
+                {/* <Link onClick={() => { this.props.signOut() }} to='/'>signout</Link> */}
             </div>
         )
     }

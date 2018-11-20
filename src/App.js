@@ -5,35 +5,48 @@ import Navigation from './components/navigation';
 import TaskForm from './components/taskForm';
 import TaskList from './components/taskList';
 import Picker from './components/picker';
-import Welcome from './components/welcome';
+import SignIn from './components/signIn';
+import SignUp from './components/signUp';
 import PersonalPanel from './components/personalPanel';
 import { connect } from 'react-redux';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { signIn, signOut } from './actions/authAction'
 
 
 class App extends Component {
 
   render() {
-
+    
     // Serve different component with login state
-    const content = this.props.firebase.auth.uid ? (
-      <div>
-        <ul id='template'>
-          <li><Picker /></li>
-          <li><CurrentTask /></li>
-          <li><TaskForm /></li>
-          <li><TaskList /></li>
-        </ul>
-        <Navigation />
+    const authPannel = this.props.firebase.auth.uid ? (
+      <div id='authPannel'>
+        <button onClick={() => { this.props.signOut() }}>Sign Out</button>
       </div>
     ) : (
-        <Welcome />
+        <div id='authPannel'>
+          <Link to="/signIn" onClick={this.toggleAuthPannel}>Sign In</Link>
+          <Link to='/signUp' onClick={this.toggleAuthPannel}>Sign Up</Link>
+        </div>
       );
 
     return (
-      <div className="App">
-        {content}
-        <PersonalPanel />
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <ul id='template'>
+            <li><Picker /></li>
+            <li><CurrentTask /></li>
+            <li><TaskForm /></li>
+            <li><TaskList /></li>
+          </ul>
+          <Navigation />
+          { authPannel }
+          <Route path='/signIn' component={SignIn} />
+          <Route path='/signUp' component={SignUp} />
+          
+          {/* <PersonalPanel /> */}
+        </div>
+      </BrowserRouter>
     );
   }
 }
@@ -44,4 +57,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signOut: () => { dispatch(signOut()) }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -9,7 +9,8 @@ class TaskForm extends Component {
     state = {
         task: "",
         description: "",
-        tags: []
+        tags: [],
+        ownerId: this.props.auth.uid
     }
 
     checkTagState = (isActive, tag) => {
@@ -42,6 +43,8 @@ class TaskForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+
+        // actions based on login state
         if (this.props.auth.uid){ this.props.addTask(this.state, this.props.auth.uid) }
         
         this.setState({

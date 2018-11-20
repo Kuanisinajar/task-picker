@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 
-const TaskList = ({ defaultTasks, userTasks, auth }) => {
 
+const TaskList = ({ defaultTasks, userTasks, auth }) => {
     const defaultObjects = defaultTasks && defaultTasks.length ? (
-        defaultTasks.map(tasks => {
+        defaultTasks.map(task => {
             return (
-                <TaskObj key={tasks.id} tasks={tasks} />
+                <TaskObj key={task.id} task={task} />
             )
         })
     ) : (
@@ -17,9 +17,9 @@ const TaskList = ({ defaultTasks, userTasks, auth }) => {
         );
 
     const userObjects = userTasks && userTasks.length ? (
-        userTasks.map((tasks, index) => {
+        userTasks.map(tasks => {
             return (
-                <TaskObj key={index} tasks={tasks} />
+                <TaskObj key={tasks.id} task={tasks} />
             )
         })
     ) : (
@@ -34,9 +34,10 @@ const TaskList = ({ defaultTasks, userTasks, auth }) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
+    const userTasks = state.firestore.ordered.userTasks && state.firestore.ordered.userTasks.filter(task => task.ownerId === state.firebase.auth.uid);
+
     return {
-        userTasks: state.firebase.profile.userTasks,
+        userTasks: userTasks,
         defaultTasks: state.firestore.ordered.defaultTasks,
         firestore: state.firestore,
         auth: state.firebase.auth
@@ -46,6 +47,6 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
-        { collection: 'defaultTasks' }, { collection: 'users' }
+        { collection: 'defaultTasks' }, { collection: 'userTasks' }
     ])
 )(TaskList);

@@ -28,7 +28,7 @@ class Picker extends Component {
         let options = [];
         for (let task of allTasks) {
             let match = false;
-            for(let taskTag of task.tags){
+            for (let taskTag of task.tags) {
                 for (let sTag of this.state.selectedTags) {
                     if (taskTag === sTag) {
                         match = true;
@@ -46,12 +46,17 @@ class Picker extends Component {
         }
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div id="picker">
-                <p>filters: </p>
-                <TagList checkTagState={this.checkTagState} noNewTag={true}/>
-                <button onClick={this.pickTask}>Pick!</button>
+                <div className='wrapper'>
+                    <div className='tagWrapper'>
+                        <TagList checkTagState={this.checkTagState} noNewTag={true} />
+                    </div>
+                    <div className='buttonWrapper'>
+                        <button onClick={this.pickTask}><div className="circle"><span>挑！</span></div></button>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -66,8 +71,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return{
-        setCurrentTask: (task) => {dispatch(setCurrentTask(task))}
+    return {
+        setCurrentTask: (task) => { dispatch(setCurrentTask(task)) }
     }
 }
 

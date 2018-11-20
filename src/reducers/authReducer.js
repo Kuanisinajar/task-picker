@@ -1,5 +1,7 @@
 const initState = {
-    authError: null
+    authError: null,
+    userTasks: [],
+    userTags: []
 }
 
 const authReducer = (state = initState, action) => {
@@ -12,11 +14,16 @@ const authReducer = (state = initState, action) => {
 
         case "LOGIN_SUCCESS":
             console.log("logIn success!");
+            console.log(action.data);
             return {
-                ...state,
-                authError: null
+                authError: null,
+                userTasks: action.data.userTasks,
+                userTags: action.data.userTags
             }
-
+        
+        case "USER_DATA_LOADED":
+            console.log('we did it');
+            return state;
         case "LOGOUT_SUCCESS":
             console.log("logout success");
             return state
