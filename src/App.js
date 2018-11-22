@@ -38,10 +38,10 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <ul id='template'>
-            <li><Picker /></li>
-            <li><CurrentTask /></li>
-            <li><TaskForm /></li>
-            <li><TaskList /></li>
+            <li className='mainArea'><Picker /></li>
+            <li className='mainArea'><CurrentTask /></li>
+            <li className='mainArea'><TaskForm /></li>
+            <li className='mainArea'><TaskList /></li>
           </ul>
           <Navigation />
           { authPannel }

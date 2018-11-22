@@ -4,7 +4,7 @@ class TagObj extends Component {
 
     state = {
         tag: this.props.tag,
-        active: false
+        active: false || this.props.active
     }
 
 
@@ -17,13 +17,13 @@ class TagObj extends Component {
 
     }
 
-    componentDidMount() {
-        if (this.props.active) {
-            this.setState({
-                active: this.props.active
-            });
-        }
-    }
+    // componentDidMount() {
+    //     if (this.props.active) {
+    //         this.setState({
+    //             active: this.props.active
+    //         });
+    //     }
+    // }
 
     render() {
         return (

@@ -88,13 +88,7 @@ class TaskObj extends Component {
     }
 
     render() {
-        // const tagList = this.props.task.tags && this.props.task.tags.map((tag, index) => {
-        //     return (
-        //         <div key={index} className="tagObj">
-        //             {tag}
-        //         </div>
-        //     )
-        // });
+  
         const tagList = this.props.task.tags && this.props.task.tags.map((tag, index) => {
             return (
                 <div key={index} className="tagObj">
