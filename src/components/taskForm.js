@@ -74,7 +74,7 @@ class TaskForm extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        allTags: state.project.allTags,
+        allTags: state.localStore.allTags,
         auth: state.firebase.auth
     }
 }

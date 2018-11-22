@@ -20,7 +20,7 @@ const CurrentTask = ({currentTask}) => {
 
 const mapStateToProps = (state) => {
     return {
-        currentTask: state.project.currentTask
+        currentTask: state.localStore.currentTask
     }
 }
 

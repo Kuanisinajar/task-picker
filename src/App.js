@@ -11,13 +11,17 @@ import PersonalPanel from './components/personalPanel';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Link, NavLink } from 'react-router-dom';
-import { signIn, signOut } from './actions/authAction'
+import { signIn, signOut } from './actions/authAction';
+import { loadTasksToCentral } from './actions/manageTask';
 
 
 class App extends Component {
 
+  componentDidMount(){
+    this.props.loadTasksToCentral(this.props.firebase.auth.uid);
+  }
+
   render() {
-    
     // Serve different component with login state
     const authPannel = this.props.firebase.auth.uid ? (
       <div id='authPannel'>
@@ -59,7 +63,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signOut: () => { dispatch(signOut()) }
+    signOut: () => { dispatch(signOut()) },
+    loadTasksToCentral: (ownerId) => { dispatch(loadTasksToCentral(ownerId)) }
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

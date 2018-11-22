@@ -61,3 +61,26 @@ export const editTask = (task, userId) => {
         })
     }
 }
+
+export const loadTasksToCentral = (ownerId) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firestore = getFirestore();
+
+        firestore.collection('userTasks').where('ownerId', '==', ownerId).get()
+            .then((snapshot) => {
+                const tasks = [];
+                snapshot.docs.forEach(doc => {
+                    tasks.push(doc.data());
+                });
+                dispatch({
+                    type: 'LOAD_TASKS_FROM_FIRESTORE',
+                    tasks: tasks
+                });
+            }).catch((err) => {
+                dispatch({
+                    type: 'LOAD_TASKS_ERROR',
+                    err
+                });
+            });
+    }
+}

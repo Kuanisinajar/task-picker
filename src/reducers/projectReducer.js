@@ -7,6 +7,12 @@ const initState = {
 const projectReducer = (state = initState, action) => {
 
     switch (action.type) {
+        case "LOAD_TASKS_FROM_FIRESTORE":
+            console.log('Data loaded from firestore');
+            return {
+                ...state,
+                tasks: action.tasks
+            }
         case "ADD_TASK":
             //action.task.id = state.tasks[state.tasks.length-1].id + 1;
             console.log(action.task);
