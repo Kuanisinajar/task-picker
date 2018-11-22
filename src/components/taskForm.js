@@ -10,7 +10,7 @@ class TaskForm extends Component {
         task: "",
         description: "",
         tags: [],
-        ownerId: this.props.auth.uid
+        ownerId: this.props.auth.uid,
     }
 
     checkTagState = (isActive, tag) => {
@@ -43,14 +43,14 @@ class TaskForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-
         // actions based on login state
-        if (this.props.auth.uid){ this.props.addTask(this.state, this.props.auth.uid) }
-        
+        if (this.props.auth.uid && this.state.task !== "") {
+            this.props.addTask(this.state, this.props.auth.uid)
+        }
         this.setState({
             task: "",
             description: "",
-            tags: []
+            tags: [],
         });
     }
 
@@ -58,14 +58,14 @@ class TaskForm extends Component {
         return (
             <div>
                 <form id="taskForm" onSubmit={this.handleSubmit}>
-                    <label htmlFor="task">Task: </label>
-                    <input type="text" id='task' onChange={this.handleChange} value={this.state.task} autoComplete="off" form="taskForm" />
-                    <label htmlFor="description"> Description</label>
-                    <input type="text" id='description' onChange={this.handleChange} value={this.state.description} autoComplete="off" form="taskForm" />
-                    <label htmlFor="tags">Tags: </label>
-                    <input type="text" id='tags' onChange={this.handleTags} value={this.state.tags.join(' ')} autoComplete="off" form="taskForm" />
-                    <TagList checkTagState={this.checkTagState} noNewTag={false}/>
-                    <button form="taskForm">submit</button>
+                    <input type="text" id='task' onChange={this.handleChange} value={this.state.task} autoComplete="off" placeholder='任務' />
+                    <textarea type="text" id='description' onChange={this.handleChange} value={this.state.description} autoComplete="off" placeholder='說明' />
+                    {/* <input type="text" id='tags' onChange={this.handleTags} value={this.state.tags.join(' ')} autoComplete="off" /> */}
+                    <TagList checkTagState={this.checkTagState} 
+                             noNewTag={false} />
+                    <div className="formButtonArea">
+                        <button form="taskForm">新增</button>
+                    </div>
                 </form>
             </div>
         )
@@ -80,7 +80,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return{
+    return {
         addTask: (task, userId) => { dispatch(addTask(task, userId)) }
     }
 }

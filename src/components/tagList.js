@@ -13,7 +13,6 @@ class TagList extends Component {
             tag: "",
             ownerId: this.props.auth.uid
         }
-
     }
 
     handleChange = (e) => {
@@ -35,20 +34,32 @@ class TagList extends Component {
         });
     }
 
+    matchWithEditingTaskTag = (tag, editingTaskTags) => {
+        let match = false;
+        for (let editingTag of editingTaskTags){
+            if (tag === editingTag){
+                match = true;
+            } 
+        }
+        return match;
+    }
+
     render() {
         const newTagForm = this.state.noNewTag ? null : (
-            <div id="tag-input" className='tagObj'>
-                <input type="text" onChange={this.handleChange} value={this.state.tag.tag} placeholder="New Task" />
+            <div className="tagInput tagObj">
+                <input type="text" onChange={this.handleChange} value={this.state.tag.tag} placeholder="新標籤" />
                 <span onClick={this.handleSubmit}>submit</span>
             </div>
         )
 
         const userContent = this.props.userTags && this.props.userTags ? (
             this.props.userTags.map((tag, index) => {
+                const active = this.props.editingTaskTags && this.matchWithEditingTaskTag(tag.tag, this.props.editingTaskTags);
                 return (
                     <TagObj tag={tag.tag}
                         checkTagState={this.props.checkTagState}
-                        key={index} />
+                        key={index} 
+                        active={active}/>
                 )
             })
         ) : (

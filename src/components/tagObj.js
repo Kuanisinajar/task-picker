@@ -6,7 +6,8 @@ class TagObj extends Component {
         tag: this.props.tag,
         active: false
     }
-    
+
+
     handleClick = (e) => {
         this.setState({
             active: !this.state.active
@@ -14,6 +15,14 @@ class TagObj extends Component {
             this.props.checkTagState(this.state.active, this.props.tag)
         });
 
+    }
+
+    componentDidMount() {
+        if (this.props.active) {
+            this.setState({
+                active: this.props.active
+            });
+        }
     }
 
     render() {

@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import TagList from './tagList';
 import { connect } from 'react-redux';
 import { deleteTask, editTask } from '../actions/manageTask';
-import editImg from '../edit_img.svg';
+import editImg from '../edit.svg';
+import closeImg from '../close.svg';
+import flagImg from '../flag.svg';
 
 
 class TaskObj extends Component {
@@ -13,12 +15,19 @@ class TaskObj extends Component {
             tags: this.props.task.tags,
             id: this.props.task.id
         },
-        editing: false
+        editing: false,
+        showTagList: false
     }
 
     toggleEditMode = () => {
         this.setState({
             editing: !this.state.editing
+        });
+    }
+
+    toggleTagList = () => {
+        this.setState({
+            showTagList: !this.state.showTagList
         });
     }
 
@@ -43,16 +52,24 @@ class TaskObj extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.editTask(this.state.task);
+        this.props.editTask(this.state.task, this.props.userId);
         this.setState({
             editing: !this.state.editing
         });
     }
 
     checkTagState = (isActive, tag) => {
-        let newTags = [...this.state.task.tags]
+        let newTags = [...this.state.task.tags];
         if (isActive) {
-            newTags.push(tag);
+            let shouldAdd = true;
+            for (let item of newTags) {
+                if (tag === item) {
+                    shouldAdd = false;
+                }
+            }
+            if (shouldAdd) {
+                newTags.push(tag);
+            }
             this.setState({
                 task: {
                     ...this.state.task,
@@ -69,9 +86,18 @@ class TaskObj extends Component {
             });
         }
     }
-
+    componentDidUpdate(prevProps) {
+        console.log('taskObj updated');
+        console.log(this.props.task);
+    }
     render() {
-        console.log(this.props.task.tags);
+        // const tagList = this.props.task.tags && this.props.task.tags.map((tag, index) => {
+        //     return (
+        //         <div key={index} className="tagObj">
+        //             {tag}
+        //         </div>
+        //     )
+        // });
         const tagList = this.props.task.tags && this.props.task.tags.map((tag, index) => {
             return (
                 <div key={index} className="tagObj">
@@ -83,28 +109,44 @@ class TaskObj extends Component {
         const content = this.state.editing ? (
             <form onSubmit={this.handleSubmit}>
                 <input type="text" name='task' onChange={this.handleChange} defaultValue={this.state.task.task} autoComplete="off" />
-                <input type="text" name='description' onChange={this.handleChange} defaultValue={this.state.task.description} autoComplete="off" />
+                <textarea type="text" name='description' onChange={this.handleChange} defaultValue={this.state.task.description} autoComplete="off" />
+                <label htmlFor="">已選取</label>
                 <input type="text" name='tags' onChange={this.handleTags} value={this.state.task.tags.join(' ')} autoComplete="off" />
-                <TagList checkTagState={this.checkTagState} noNewTag={false} />
-                <button>submit</button>
+                <TagList checkTagState={this.checkTagState} noNewTag={false} editingTaskTags={this.props.task.tags} />
+                <div className="formButtonArea">
+                    <button>儲存</button>
+                    <button onClick={() => { this.props.deleteTask(this.props.task.id) }} name='delete'>刪除</button>
+                </div>
             </form>
         ) : (
                 <div className='taskObjWrapper'>
-                    <button className='closeBtn' onClick={() => { this.props.deleteTask(this.props.task.id) }}>
-                        <div className='bar'></div>
-                    </button>
-                    <button className='editBtn' onClick={this.toggleEditMode}>
-                        <img src={editImg} />
-                    </button>
-                    <div className="title">{this.props.task.task}</div>
-                    <div className="description">{this.props.task.description}</div>
-                    <div className="tags">{tagList}</div>
 
+                    <div className='taskObjUpper'>
+                        <div className="title">{this.props.task.task}</div>
+                    </div>
+                    <div className="taskObjLower">
+                        <div className="description">{this.props.task.description}</div>
+                    </div>
+                    <div className={this.state.showTagList ? "taskObjTagList" : "taskObjTagList tagListHidden"}>
+                        <div className="tags">{tagList}</div>
+                    </div>
+
+                    {/* <button className='closeBtn' onClick={() => { this.props.deleteTask(this.props.task.id) }}>
+                        <img src={closeImg} />
+                    </button> */}
+                    <button className='editBtn' onClick={this.toggleEditMode}>
+                        <img src={editImg} alt='' />
+                    </button>
+                    <button className="toggleTagsBtn" onClick={this.toggleTagList}>
+                        <img src={flagImg} alt='' />
+                    </button>
                 </div>
             );
 
+
         return (
-            <div className="taskObj" key={this.props.task.id}>
+            <div className={this.state.editing ? "taskEditForm" : "taskObj"}
+                key={this.props.task.id}>
                 {content}
             </div>
         )
@@ -113,13 +155,13 @@ class TaskObj extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        userId: state.auth.uid
+        userId: state.firebase.auth.uid
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
         deleteTask: (taskId) => { dispatch(deleteTask(taskId)) },
-        editTask: (task) => { dispatch(editTask(task)) }
+        editTask: (task, userId) => { dispatch(editTask(task, userId)) }
     }
 }
 

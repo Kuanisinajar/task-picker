@@ -38,12 +38,16 @@ export const deleteTask = (taskId) => {
     }
 }
 
-export const editTask = (task) => {
+export const editTask = (task, userId) => {
 
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore();
         firestore.collection('userTasks').doc(task.id).update({
-            ...task 
+            task: task.task,
+            description: task.description,
+            tags: task.tags,
+            id: task.id,
+            ownerId: userId
         }).then(() => {
             dispatch({
                 type: "UPDATE_TASK",

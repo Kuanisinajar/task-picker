@@ -27,7 +27,7 @@ const projectReducer = (state = initState, action) => {
         case "UPDATE_TASK":
             console.log('update success');
             return state;
-            case "UPDATE_TASK_ERROR":
+        case "UPDATE_TASK_ERROR":
             console.log(action.err);
             return state;
         case "ADD_TAG":

@@ -25,7 +25,6 @@ const TaskList = ({ defaultTasks, userTasks, auth }) => {
     ) : (
             <p>No Tasks!</p>
         );
-
     return (
         <div id="taskList">
             { auth.uid ? userObjects : defaultObjects }
