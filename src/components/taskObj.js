@@ -86,10 +86,7 @@ class TaskObj extends Component {
             });
         }
     }
-    componentDidUpdate(prevProps) {
-        console.log('taskObj updated');
-        console.log(this.props.task);
-    }
+
     render() {
         // const tagList = this.props.task.tags && this.props.task.tags.map((tag, index) => {
         //     return (

@@ -6,6 +6,7 @@ import { compose } from 'redux';
 
 
 const TaskList = ({ defaultTasks, userTasks, auth }) => {
+    console.log(userTasks);
     const defaultObjects = defaultTasks && defaultTasks.length ? (
         defaultTasks.map(task => {
             return (
@@ -17,9 +18,10 @@ const TaskList = ({ defaultTasks, userTasks, auth }) => {
         );
 
     const userObjects = userTasks && userTasks.length ? (
-        userTasks.map(tasks => {
+        userTasks.map(task => {
+            console.log(task.id);
             return (
-                <TaskObj key={tasks.id} task={tasks} />
+                <TaskObj key={task.id} task={task} />
             )
         })
     ) : (
@@ -36,7 +38,8 @@ const mapStateToProps = (state) => {
     const userTasks = state.firestore.ordered.userTasks && state.firestore.ordered.userTasks.filter(task => task.ownerId === state.firebase.auth.uid);
 
     return {
-        userTasks: userTasks,
+        userTasks: state.localStore.tasks,
+        // userTasks: userTasks,
         defaultTasks: state.firestore.ordered.defaultTasks,
         firestore: state.firestore,
         auth: state.firebase.auth

@@ -4,10 +4,11 @@ export const addTask = (task) => {
         const firestore = getFirestore();
         firestore.collection('userTasks').add({
             ...task
-        }).then(() => {
+        }).then((snapshot) => {
             dispatch({
                 type: "ADD_TASK",
-                task: task
+                task: task,
+                taskId: snapshot.id
             });
         }).catch((err) => {
             dispatch({
@@ -27,6 +28,7 @@ export const deleteTask = (taskId) => {
             .then(() => {
                 dispatch({
                     type: "DELETE_TASK",
+                    taskId: taskId
                 });
             }).catch((err) => {
                 dispatch({
@@ -70,7 +72,9 @@ export const loadTasksToCentral = (ownerId) => {
             .then((snapshot) => {
                 const tasks = [];
                 snapshot.docs.forEach(doc => {
-                    tasks.push(doc.data());
+                    const task = doc.data();
+                    task.id = doc.id;
+                    tasks.push(task);
                 });
                 dispatch({
                     type: 'LOAD_TASKS_FROM_FIRESTORE',

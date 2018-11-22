@@ -14,25 +14,43 @@ const projectReducer = (state = initState, action) => {
                 tasks: action.tasks
             }
         case "ADD_TASK":
+            let addingTask = action.task;
+            addingTask.id = action.taskId;
+            let addingTasks = [...state.tasks, addingTask];
             //action.task.id = state.tasks[state.tasks.length-1].id + 1;
-            console.log(action.task);
-            let newTasks = [...state.tasks, action.task];
+            // console.log(action.task);
+            // let newTasks = [...state.tasks, action.task];
+            // return {
+            //     ...state,
+            //     tasks: newTasks
+            // }
             return {
-                ...state,
-                tasks: newTasks
+                ...state, 
+                tasks: addingTasks
             }
         case "ADD_TASK_ERROR":
             console.log(action.err);
             return state;
         case "DELETE_TASK":
-            console.log('this is deleted');
-            return state;
+            console.log('Task deleted');
+            let deletingTasks = [...state.tasks];
+            deletingTasks = deletingTasks.filter(task => task.id !== action.taskId);
+            return {
+                ...state,
+                tasks: deletingTasks
+            };
         case "DELETE_TASK_ERROR":
             console.log(action.err);
             return state;
         case "UPDATE_TASK":
             console.log('update success');
-            return state;
+            let updatingTasks = [...state.tasks];
+            const itemIndex = state.tasks.findIndex(task => task.id === action.task.id);
+            updatingTasks[itemIndex] = action.task;
+            return {
+                ...state,
+                tasks: updatingTasks
+            }
         case "UPDATE_TASK_ERROR":
             console.log(action.err);
             return state;
