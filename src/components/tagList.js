@@ -79,7 +79,7 @@ class TagList extends Component {
             );
 
         return (
-            <div id="tagList">
+            <div className="tagList">
                 {newTagForm}
                 {this.props.auth.uid ? userContent : defaultContent}
             </div>

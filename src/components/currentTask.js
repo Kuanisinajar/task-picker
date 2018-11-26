@@ -3,10 +3,10 @@ import TaskObj from './taskObj';
 import { connect } from 'react-redux'
 
 
-const CurrentTask = ({currentTask}) => {
+const CurrentTask = ({currentTask, auth}) => {
 
-    const content = currentTask ? (
-        <TaskObj tasks={currentTask} />
+    const content = auth.uid && currentTask ? (
+        <TaskObj task={currentTask} />
     ):(
        <span>No task!</span>
     );
@@ -20,7 +20,8 @@ const CurrentTask = ({currentTask}) => {
 
 const mapStateToProps = (state) => {
     return {
-        currentTask: state.localStore.currentTask
+        currentTask: state.localStore.currentTask,
+        auth: state.firebase.auth
     }
 }
 

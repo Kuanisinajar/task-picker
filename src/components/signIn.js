@@ -35,7 +35,7 @@ class SignIn extends Component {
             <div id="signInForm">
                 <form onSubmit={this.handleSubmit}>
                     <div className='authTitle'>登入</div>
-                    <Link to='/'><div className='closeBtn'><div className='bar'></div></div></Link>
+                    <Link to='/'><div className='closeBtn'>Close</div></Link>
                     <input type="text" id="email" onChange={this.handleChange} value={this.state.email} placeholder="帳號" />
                     <input type="text" id='password' onChange={this.handleChange} value={this.state.password} placeholder="密碼" />
                     <button>Submit</button>

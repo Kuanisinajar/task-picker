@@ -6,7 +6,6 @@ import { compose } from 'redux';
 
 
 const TaskList = ({ defaultTasks, userTasks, auth }) => {
-    console.log(userTasks);
     const defaultObjects = defaultTasks && defaultTasks.length ? (
         defaultTasks.map(task => {
             return (

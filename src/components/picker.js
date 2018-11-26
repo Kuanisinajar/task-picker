@@ -3,14 +3,33 @@ import TagList from './tagList';
 import TaskObj from './taskObj';
 import { connect } from 'react-redux';
 import { setCurrentTask } from '../actions/setCurrentTask';
+import dropUp from '../dropUp.svg';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
 
 class Picker extends Component {
     state = {
         selectedTags: [],
+        showTagSelectionPannel: false,
         pickedTask: null,
-        animationPerformed: false
+        animationPerformed: false,
     }
 
+    returnToDefaultStyle = () => {
+        const li2 = document.querySelector('li:nth-child(2)');
+        li2.classList.add('transparent');
+        this.setState({
+            pickedTask: null,
+            animationPerformed: false
+        });
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if (prevProps.loggedIn !== this.props.loggedIn) {
+            this.returnToDefaultStyle();
+        }
+
+    }
     checkTagState = (isActive, tag) => {
         let newTags = [...this.state.selectedTags]
         if (isActive) {
@@ -24,6 +43,12 @@ class Picker extends Component {
                 selectedTags: newTags
             });
         }
+    }
+
+    toggleTagSelectionPannel = () => {
+        this.setState({
+            showTagSelectionPannel: !this.state.showTagSelectionPannel
+        });
     }
 
     pickTask = () => {
@@ -43,11 +68,6 @@ class Picker extends Component {
                 options.push(task);
             }
         }
-        // if (options.length === 0) {
-        //     this.props.setCurrentTask(allTasks[Math.floor(Math.random() * allTasks.length)]);
-        // } else {
-        //     this.props.setCurrentTask(options[Math.floor(Math.random() * options.length)]);
-        // }
 
         // for animation
         const taskDeck = document.getElementsByClassName('deckWrapper')[0];
@@ -60,6 +80,29 @@ class Picker extends Component {
         this.setState({
             pickedTask: tasks[Math.floor(Math.random() * tasks.length)]
         });
+    }
+
+    execute = () => {
+        this.props.setCurrentTask(this.state.pickedTask);
+        // redirect
+        const areaLine = document.getElementsByClassName('area-line');
+        const titleScroll = document.getElementById('title-scroll');
+        const template = document.getElementById('template');
+        for (let item of areaLine) {
+            item.classList.remove('area-line-active');
+        }
+        areaLine[1].classList.toggle('area-line-active');
+        titleScroll.style.transform = "translate(0, -100%)";
+        template.style.transform = "translate(-100%, 0)";
+
+        // return to initial state
+        // const li2 = document.querySelector('li:nth-child(2)');
+        // li2.classList.add('transparent');
+        // this.setState({
+        //     pickedTask: null,
+        //     animationPerformed: false
+        // });
+        this.returnToDefaultStyle();
     }
 
     animationEnd = () => {
@@ -76,10 +119,10 @@ class Picker extends Component {
         })
     }
 
+
     render() {
         return (
             <div id="picker">
-                <TagList checkTagState={this.checkTagState} noNewTag={true} />
                 <ul className="deck">
                     <li>
                         <div className="deckWrapper">
@@ -94,16 +137,30 @@ class Picker extends Component {
                                     {this.state.animationPerformed ? "再一次" : "挑任務"}
                                 </button>
                                 {this.state.animationPerformed ? (
-                                    <button id='excuteBtn'>執行</button>
+                                    <button id='excuteBtn'
+                                        onClick={this.execute}>
+                                        執行
+                                    </button>
                                 ) : null}
                             </div>
-                            <div id='tagSelectionBtn'>選取任務範圍</div>
+
                         </div>
                     </li>
                     <li className={this.animationPerformed ? "null" : "transparent"}>
                         {this.state.pickedTask && this.state.pickedTask ? <TaskObj task={this.state.pickedTask} /> : null}
                     </li>
+                    <div id='tagSelectionBtn'
+                        onClick={this.toggleTagSelectionPannel}>
+                        選取任務範圍
+                        <img src={dropUp} alt="" />
+                    </div>
                 </ul>
+
+                {this.state.showTagSelectionPannel ?
+                    <div className='tagListWrapper'>
+                        <TagList checkTagState={this.checkTagState} noNewTag={true} />
+                    </div>
+                    : null}
             </div>
         )
     }
@@ -111,7 +168,8 @@ class Picker extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        tasks: state.localStore.tasks,
+        loggedIn: state.firebase.auth.uid ? true : false,
+        tasks: state.firebase.auth.uid ? state.localStore.tasks : state.firestore.ordered.defaultTasks,
         allTags: state.localStore.allTags,
         currentTask: state.localStore.currentTask
     }
@@ -123,4 +181,11 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Picker);
+// export default connect(mapStateToProps, mapDispatchToProps)(Picker);
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    firestoreConnect([
+        { collection: 'defaultTasks' }
+    ])
+)(Picker);

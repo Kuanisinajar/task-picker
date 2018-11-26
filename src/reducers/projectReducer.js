@@ -13,6 +13,9 @@ const projectReducer = (state = initState, action) => {
                 ...state,
                 tasks: action.tasks
             }
+        case "CLEAR_CENTRAL_TASKS":
+            console.log('should clear');
+            return state
         case "ADD_TASK":
             let addingTask = action.task;
             addingTask.id = action.taskId;
@@ -74,6 +77,7 @@ const projectReducer = (state = initState, action) => {
                 return state;
             }
         case "SET_CURRENT_TASK":
+
             return {
                 ...state,
                 currentTask: action.task

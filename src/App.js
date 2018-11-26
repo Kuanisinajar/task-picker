@@ -18,10 +18,15 @@ import { loadTasksToCentral } from './actions/manageTask';
 class App extends Component {
 
   componentDidMount(){
-    this.props.loadTasksToCentral(this.props.firebase.auth.uid);
+    if (this.props.firebase.auth.uid) {
+     this.props.loadTasksToCentral(this.props.firebase.auth.uid);
+    } else {
+      this.props.loadTasksToCentral();
+    }
   }
 
   render() {
+    
     // Serve different component with login state
     const authPannel = this.props.firebase.auth.uid ? (
       <div id='authPannel'>
@@ -29,8 +34,8 @@ class App extends Component {
       </div>
     ) : (
         <div id='authPannel'>
-          <Link to="/signIn" onClick={this.toggleAuthPannel}>Sign In</Link>
-          <Link to='/signUp' onClick={this.toggleAuthPannel}>Sign Up</Link>
+          <Link to="/signIn">Sign In</Link>
+          <Link to='/signUp'>Sign Up</Link>
         </div>
       );
 
@@ -64,7 +69,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     signOut: () => { dispatch(signOut()) },
-    loadTasksToCentral: (ownerId) => { dispatch(loadTasksToCentral(ownerId)) }
+    loadTasksToCentral: (ownerId) => { dispatch(loadTasksToCentral(ownerId)) },
+    clearCentralTasks: () => { dispatch({ type: "CLEAR_CENTRAL_TASKS" }) }
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -65,26 +65,45 @@ export const editTask = (task, userId) => {
 }
 
 export const loadTasksToCentral = (ownerId) => {
+    const id = ownerId;
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore();
 
-        firestore.collection('userTasks').where('ownerId', '==', ownerId).get()
-            .then((snapshot) => {
-                const tasks = [];
-                snapshot.docs.forEach(doc => {
-                    const task = doc.data();
-                    task.id = doc.id;
-                    tasks.push(task);
+        if (id !== undefined) {
+            console.log(ownerId);
+            firestore.collection('userTasks').where('ownerId', '==', ownerId).get()
+                .then((snapshot) => {
+                    const tasks = [];
+                    snapshot.docs.forEach(doc => {
+                        const task = doc.data();
+                        task.id = doc.id;
+                        tasks.push(task);
+                    });
+                    dispatch({
+                        type: 'LOAD_TASKS_FROM_FIRESTORE',
+                        tasks: tasks
+                    });
+                }).catch((err) => {
+                    dispatch({
+                        type: 'LOAD_TASKS_ERROR',
+                        err
+                    });
                 });
-                dispatch({
-                    type: 'LOAD_TASKS_FROM_FIRESTORE',
-                    tasks: tasks
-                });
-            }).catch((err) => {
-                dispatch({
-                    type: 'LOAD_TASKS_ERROR',
-                    err
-                });
-            });
-    }
+        } else {
+            console.log('no id');
+            firestore.collection('defaultTasks').get()
+                .then((snapshot) => {
+                    const tasks = [];
+                    snapshot.docs.forEach(doc => {
+                        const task = doc.data();
+                        task.id = doc.id;
+                        tasks.push(task);
+                    });
+                    dispatch({
+                        type: 'LOAD_TASKS_FROM_FIRESTORE',
+                        tasks: tasks
+                    });
+                })
+        }
+    } 
 }
