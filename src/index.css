@@ -11,9 +11,18 @@ body {
   overflow: hidden;
 }
 
+a:link,
+a:visited,
+a:active {
+  color: #003049;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 button {
   background: transparent;
   border: none;
+  cursor: pointer;
 }
 
 button:focus {
@@ -70,6 +79,10 @@ li {
   margin: 72px;
 }
 
+.taskObj .tagObj {
+  cursor: default;
+}
+
 .taskObjWrapper {
   width: 100%;
   height: 100%;
@@ -86,9 +99,9 @@ li {
 
 .taskObjWrapper .taskObjTagList {
   width: 100%;
-  height: calc(100% - 32px);
+  height: calc(100% - 64px);
   position: absolute;
-  bottom: 32px;
+  top: 0;
   left: 0;
   background: #F6F7F8;
   -webkit-transition: 2s ease;
@@ -161,7 +174,6 @@ li {
 }
 
 #taskList {
-  overflow-y: scroll;
   position: relative;
 }
 
@@ -224,7 +236,6 @@ li {
 #taskForm .tagList {
   height: 160px;
   padding: 0 24px;
-  overflow-y: scroll;
 }
 
 #taskForm .formButtonArea {
@@ -301,7 +312,6 @@ li {
 .taskEditForm .tagList {
   height: 160px;
   padding: 0 24px;
-  overflow-y: scroll;
 }
 
 .taskEditForm .formButtonArea {
@@ -456,8 +466,13 @@ li {
 
 #authPannel {
   position: fixed;
-  top: 2%;
-  right: 2%;
+  top: 24px;
+  right: 72px;
+  font-size: 14px;
+}
+
+#authPannel button {
+  font-size: 14px;
 }
 
 #signInForm, #signUpForm {
@@ -466,14 +481,14 @@ li {
   position: absolute;
   top: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.9);
+  background: #F6F7F8;
   z-index: 107;
 }
 
 #signInForm form, #signUpForm form {
-  width: 600px;
-  height: 440px;
-  border: 1px solid black;
+  width: 384px;
+  height: 465.6px;
+  border: 4px solid #003049;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -487,6 +502,16 @@ li {
   text-align: center;
   padding-top: 10%;
   padding-bottom: 10%;
+  margin-top: 32px;
+}
+
+#signInForm .inputWrapper, #signUpForm .inputWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 #signInForm input, #signUpForm input {
@@ -494,9 +519,9 @@ li {
   width: 240px;
   height: 40px;
   margin: auto;
-  margin-top: 20px;
+  margin-bottom: 32px;
   border-radius: 4px;
-  border: 1px solid black;
+  border: 4px solid #003049;
   background: transparent;
 }
 
@@ -504,14 +529,45 @@ li {
   outline: none;
 }
 
+#signInForm input::-webkit-input-placeholder, #signUpForm input::-webkit-input-placeholder {
+  font-size: 14px;
+}
+
+#signInForm input:-ms-input-placeholder, #signUpForm input:-ms-input-placeholder {
+  font-size: 14px;
+}
+
+#signInForm input::-ms-input-placeholder, #signUpForm input::-ms-input-placeholder {
+  font-size: 14px;
+}
+
+#signInForm input::placeholder, #signUpForm input::placeholder {
+  font-size: 14px;
+}
+
 #signInForm button, #signUpForm button {
   display: block;
-  width: 240px;
-  height: 40px;
+  width: 248px;
+  height: 48px;
   margin: auto;
-  margin-top: 20px;
+  margin-bottom: 32px;
   border-radius: 4px;
-  background: rgba(177, 177, 177, 0.8);
+  font-size: 16px;
+  color: #F6F7F8;
+  background: #003049;
+}
+
+#signInForm .closeBtn, #signUpForm .closeBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+#signInForm #closeImg, #signUpForm #closeImg {
+  width: 24px;
+  height: 24px;
+  -o-object-fit: contain;
+  object-fit: contain;
 }
 
 ::-webkit-input-placeholder {
@@ -651,13 +707,12 @@ li {
 }
 
 #picker #tagSelectionBtn {
+  width: 100%;
   position: absolute;
+  margin: 16px 0;
+  text-align: center;
   bottom: 0;
-  left: 50%;
-  -webkit-transform: translate(-50%, 100%);
-  -ms-transform: translate(-50%, 100%);
-  transform: translate(-50%, 100%);
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
 }
 
@@ -716,29 +771,10 @@ li {
   animation: pickerAnimation_deck 3s;
 }
 
-#picker .tagListWrapper {
-  width: 80%;
-  height: 368px;
-  margin: auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  background: #F77F00;
-}
-
 #picker .tagList {
-  width: 50%;
-  padding: 24px 24px;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  text-align: center;
+  width: 100%;
+  height: 80%;
+  opacity: 0;
 }
 
 @-webkit-keyframes pickerAnimation_card {
@@ -803,4 +839,147 @@ li {
     -webkit-transform: none;
     transform: none;
   }
+}
+
+#currentTask .currentTaskWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+#currentTask .taskObj {
+  margin: 0;
+}
+
+#currentTask #finBtn {
+  display: block;
+  width: 177px;
+  padding: 8px 36px;
+  margin: auto;
+  margin-top: 56px;
+  border-radius: 8px;
+  position: relative;
+  color: #F6F7F8;
+  font-size: 16px;
+  background: #F77F00;
+}
+
+.area {
+  width: 150px;
+  max-width: 150px;
+  height: 150px;
+  background: pink;
+}
+
+.blocks {
+  width: 100px;
+  height: 100px;
+}
+
+.blocks:nth-child(even) {
+  background: teal;
+}
+
+.blocks:nth-child(odd) {
+  background: #F77F00;
+}
+
+.rcs-custom-scroll {
+  min-height: 0;
+  min-width: 0;
+}
+
+.rcs-custom-scroll .rcs-outer-container {
+  overflow: hidden;
+}
+
+.rcs-custom-scroll .rcs-outer-container .rcs-positioning {
+  position: relative;
+}
+
+.rcs-custom-scroll .rcs-outer-container:hover .rcs-custom-scrollbar {
+  opacity: 1;
+  -webkit-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+}
+
+.rcs-custom-scroll .rcs-inner-container {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rcs-custom-scroll .rcs-inner-container:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 0;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.2)), color-stop(60%, rgba(0, 0, 0, 0.05)), to(transparent));
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.05) 60%, transparent 100%);
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.05) 60%, transparent 100%);
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.05) 60%, transparent 100%);
+  pointer-events: none;
+  -webkit-transition: height 0.1s ease-in;
+  -o-transition: height 0.1s ease-in;
+  transition: height 0.1s ease-in;
+  will-change: height;
+}
+
+.rcs-custom-scroll .rcs-inner-container.rcs-content-scrolled:after {
+  height: 5px;
+  -webkit-transition: height 0.15s ease-out;
+  -o-transition: height 0.15s ease-out;
+  transition: height 0.15s ease-out;
+}
+
+.rcs-custom-scroll.rcs-scroll-handle-dragged .rcs-inner-container {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.rcs-custom-scroll .rcs-custom-scrollbar {
+  position: absolute;
+  height: 100%;
+  width: 6px;
+  right: 3px;
+  opacity: 0;
+  z-index: 1;
+  -webkit-transition: opacity 0.4s ease-out;
+  -o-transition: opacity 0.4s ease-out;
+  transition: opacity 0.4s ease-out;
+  padding: 6px 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  will-change: opacity;
+  pointer-events: none;
+}
+
+.rcs-custom-scroll .rcs-custom-scrollbar.rcs-custom-scrollbar-rtl {
+  right: auto;
+  left: 3px;
+}
+
+.rcs-custom-scroll.rcs-scroll-handle-dragged .rcs-custom-scrollbar {
+  opacity: 1;
+}
+
+.rcs-custom-scroll .rcs-custom-scroll-handle {
+  position: absolute;
+  width: 2px;
+  top: 0;
+}
+
+.rcs-custom-scroll .rcs-inner-handle {
+  height: 100%;
+  margin-top: 6px;
+  background-color: #003049;
+  border-radius: 3px;
 }

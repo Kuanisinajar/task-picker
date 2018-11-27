@@ -5,6 +5,7 @@ import { deleteTask, editTask } from '../actions/manageTask';
 import editImg from '../edit.svg';
 import closeImg from '../close.svg';
 import flagImg from '../flag.svg';
+import CustomScroll from 'react-custom-scroll';
 
 
 class TaskObj extends Component {
@@ -101,9 +102,9 @@ class TaskObj extends Component {
             <form onSubmit={this.handleSubmit}>
                 <input type="text" name='task' onChange={this.handleChange} defaultValue={this.state.task.task} autoComplete="off" />
                 <textarea type="text" name='description' onChange={this.handleChange} defaultValue={this.state.task.description} autoComplete="off" />
-                <label htmlFor="">已選取</label>
-                <input type="text" name='tags' onChange={this.handleTags} value={this.state.task.tags.join(' ')} autoComplete="off" />
-                <TagList checkTagState={this.checkTagState} noNewTag={false} editingTaskTags={this.props.task.tags} />
+                {/* <label htmlFor="">已選取</label>
+                <input type="text" name='tags' onChange={this.handleTags} value={this.state.task.tags.join(' ')} autoComplete="off" /> */}
+                <TagList checkTagState={this.checkTagState} noNewTag={false} editingTaskTags={this.state.task.tags} />
                 <div className="formButtonArea">
                     <button>儲存</button>
                     <button onClick={() => { this.props.deleteTask(this.props.task.id) }} name='delete'>刪除</button>
@@ -119,15 +120,22 @@ class TaskObj extends Component {
                         <div className="description">{this.props.task.description}</div>
                     </div>
                     <div className={this.state.showTagList ? "taskObjTagList" : "taskObjTagList tagListHidden"}>
-                        <div className="tags">{tagList}</div>
+                        <CustomScroll heightRelativeToParent="100%">
+                        <div className="tags">
+                            {tagList}
+                        </div>
+                        </CustomScroll>
                     </div>
 
                     {/* <button className='closeBtn' onClick={() => { this.props.deleteTask(this.props.task.id) }}>
                         <img src={closeImg} />
                     </button> */}
+                    { this.props.disableEdit ? 
+                    null : 
                     <button className='editBtn' onClick={this.toggleEditMode}>
                         <img src={editImg} alt='' />
                     </button>
+                     }
                     <button className="toggleTagsBtn" onClick={this.toggleTagList}>
                         <img src={flagImg} alt='' />
                     </button>
@@ -146,7 +154,8 @@ class TaskObj extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        userId: state.firebase.auth.uid
+        userId: state.firebase.auth.uid,
+        userTags: state.firestore.ordered.userTags
     }
 }
 const mapDispatchToProps = (dispatch) => {

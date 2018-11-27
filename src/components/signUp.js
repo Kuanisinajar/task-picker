@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { signUp } from '../actions/authAction'
 import { Redirect, Link } from 'react-router-dom';
+import closeImg from '../close.svg';
 
 class SignUp extends Component {
     state = {
@@ -28,12 +29,14 @@ class SignUp extends Component {
         return (
             <div id='signUpForm'>
                 <form onSubmit={this.handleSubmit}>
-                    <div className='authTitle'>加入吧！</div>
-                    <Link to='/'><div className='closeBtn'><div className='bar'></div></div></Link>
-                    <input type="text" id="email" onChange={this.handleChange} value={this.state.email} placeholder="email" />
-                    <input type="text" id='password' onChange={this.handleChange} value={this.state.password} placeholder="password" />
-                    <input type="text" id="name" onChange={this.handleChange} value={this.state.name} placeholder="name" />
-                    <button>submit</button>
+                    {/* <div className='authTitle'>加入吧！</div> */}
+                    <Link to='/' className='closeBtn'><img src={closeImg} alt="" id='closeImg' /></Link>
+                    <div className="inputWrapper">
+                        <input type="text" id="email" onChange={this.handleChange} value={this.state.email} placeholder="輸入信箱" />
+                        <input type="text" id='password' onChange={this.handleChange} value={this.state.password} placeholder="輸入密碼" />
+                        <input type="text" id="name" onChange={this.handleChange} value={this.state.name} placeholder="你的名字" />
+                        <button>註冊</button>
+                    </div>
                 </form>
             </div>
         )

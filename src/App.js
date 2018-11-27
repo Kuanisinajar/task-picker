@@ -30,12 +30,13 @@ class App extends Component {
     // Serve different component with login state
     const authPannel = this.props.firebase.auth.uid ? (
       <div id='authPannel'>
-        <button onClick={() => { this.props.signOut() }}>Sign Out</button>
+        <button onClick={() => { this.props.signOut() }}>登出</button>
       </div>
     ) : (
         <div id='authPannel'>
-          <Link to="/signIn">Sign In</Link>
-          <Link to='/signUp'>Sign Up</Link>
+          <Link to="/signIn">登入</Link>
+           ｜
+          <Link to='/signUp'>註冊</Link>
         </div>
       );
 

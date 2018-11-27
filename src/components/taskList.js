@@ -3,6 +3,7 @@ import TaskObj from './taskObj';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
+import CustomScroll from 'react-custom-scroll';
 
 
 const TaskList = ({ defaultTasks, userTasks, auth }) => {
@@ -18,7 +19,6 @@ const TaskList = ({ defaultTasks, userTasks, auth }) => {
 
     const userObjects = userTasks && userTasks.length ? (
         userTasks.map(task => {
-            console.log(task.id);
             return (
                 <TaskObj key={task.id} task={task} />
             )
@@ -28,7 +28,9 @@ const TaskList = ({ defaultTasks, userTasks, auth }) => {
         );
     return (
         <div id="taskList">
-            { auth.uid ? userObjects : defaultObjects }
+            <CustomScroll heightRelativeToParent="100%">
+                {auth.uid ? userObjects : defaultObjects}
+            </CustomScroll>
         </div>
     );
 }

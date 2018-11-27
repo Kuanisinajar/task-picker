@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { addTag } from '../actions/addTag';
+import CustomScroll from 'react-custom-scroll';
 
 
 class TagList extends Component {
@@ -19,7 +20,7 @@ class TagList extends Component {
         this.setState({
             tag: {
                 ...this.state.tag,
-                tag: e.target.value   
+                tag: e.target.value
             }
         });
     }
@@ -29,17 +30,17 @@ class TagList extends Component {
         this.setState({
             tag: {
                 ...this.state.tag,
-                tag: ""   
+                tag: ""
             }
         });
     }
 
     matchWithEditingTaskTag = (tag, editingTaskTags) => {
         let match = false;
-        for (let editingTag of editingTaskTags){
-            if (tag === editingTag){
+        for (let editingTag of editingTaskTags) {
+            if (tag === editingTag) {
                 match = true;
-            } 
+            }
         }
         return match;
     }
@@ -52,14 +53,14 @@ class TagList extends Component {
             </div>
         )
 
-        const userContent = this.props.userTags && this.props.userTags ? (
+        const userContent = this.props.userTags ? (
             this.props.userTags.map((tag, index) => {
                 const active = this.props.editingTaskTags && this.matchWithEditingTaskTag(tag.tag, this.props.editingTaskTags);
                 return (
                     <TagObj tag={tag.tag}
                         checkTagState={this.props.checkTagState}
-                        key={index} 
-                        active={active}/>
+                        key={index}
+                        active={active} />
                 )
             })
         ) : (
@@ -80,8 +81,10 @@ class TagList extends Component {
 
         return (
             <div className="tagList">
-                {newTagForm}
-                {this.props.auth.uid ? userContent : defaultContent}
+                <CustomScroll heightRelativeToParent="100%">
+                    {newTagForm}
+                    {this.props.auth.uid ? userContent : defaultContent}
+                </CustomScroll>
             </div>
         )
     }

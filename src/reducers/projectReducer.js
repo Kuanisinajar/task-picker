@@ -77,10 +77,14 @@ const projectReducer = (state = initState, action) => {
                 return state;
             }
         case "SET_CURRENT_TASK":
-
             return {
                 ...state,
                 currentTask: action.task
+            }
+        case "CLEAR_CURRENT_TASK":
+            return {
+                ...state,
+                currentTask: null
             }
         default:
             return state

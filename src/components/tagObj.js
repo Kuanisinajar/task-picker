@@ -17,15 +17,18 @@ class TagObj extends Component {
 
     }
 
-    // componentDidMount() {
-    //     if (this.props.active) {
-    //         this.setState({
-    //             active: this.props.active
-    //         });
-    //     }
-    // }
+    componentDidUpdate() {
+        console.log('tagObj updated');
+        if (this.props.active && this.state.active === false) {
+            this.setState({
+                active: this.props.active
+            });
+        }
+    }
 
     render() {
+        console.log(this.props.active);
+        console.log(this.props.tag);
         return (
             <div className={this.state.active ? "tagObj tagActive" : "tagObj"} onClick={this.handleClick}>
                 {this.props.tag}

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { signIn, signOut } from '../actions/authAction';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import closeImg from '../close.svg';
 
 class SignIn extends Component {
 
@@ -34,11 +35,13 @@ class SignIn extends Component {
         return (
             <div id="signInForm">
                 <form onSubmit={this.handleSubmit}>
-                    <div className='authTitle'>登入</div>
-                    <Link to='/'><div className='closeBtn'>Close</div></Link>
-                    <input type="text" id="email" onChange={this.handleChange} value={this.state.email} placeholder="帳號" />
-                    <input type="text" id='password' onChange={this.handleChange} value={this.state.password} placeholder="密碼" />
-                    <button>Submit</button>
+                    <Link to='/' className='closeBtn'><img src={closeImg} alt="" id='closeImg' /></Link>
+                    {/* <div className='authTitle'>登入</div> */}
+                    <div className="inputWrapper">
+                        <input type="text" id="email" onChange={this.handleChange} value={this.state.email} placeholder="帳號" />
+                        <input type="text" id='password' onChange={this.handleChange} value={this.state.password} placeholder="密碼" />
+                        <button>登入</button>
+                    </div>
                 </form>
                 {/* <Link onClick={() => { this.props.signOut() }} to='/'>signout</Link> */}
             </div>

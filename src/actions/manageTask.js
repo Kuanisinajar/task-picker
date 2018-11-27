@@ -36,7 +36,6 @@ export const deleteTask = (taskId) => {
                     err
                 });
             })
-
     }
 }
 
@@ -68,7 +67,6 @@ export const loadTasksToCentral = (ownerId) => {
     const id = ownerId;
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore();
-
         if (id !== undefined) {
             console.log(ownerId);
             firestore.collection('userTasks').where('ownerId', '==', ownerId).get()
@@ -106,4 +104,18 @@ export const loadTasksToCentral = (ownerId) => {
                 })
         }
     } 
+}
+
+export const setCurrentTask = (task) => {
+    console.log(task);
+    return {
+        type: "SET_CURRENT_TASK",
+        task: task
+    }
+}
+
+export const clearCurrentTask = () => {
+    return {
+        type: "CLEAR_CURRENT_TASK"
+    }
 }

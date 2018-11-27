@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TagList from './tagList';
 import TaskObj from './taskObj';
 import { connect } from 'react-redux';
-import { setCurrentTask } from '../actions/setCurrentTask';
+import { setCurrentTask } from '../actions/manageTask';
 import dropUp from '../dropUp.svg';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
@@ -10,7 +10,6 @@ import { compose } from 'redux';
 class Picker extends Component {
     state = {
         selectedTags: [],
-        showTagSelectionPannel: false,
         pickedTask: null,
         animationPerformed: false,
     }
@@ -24,7 +23,10 @@ class Picker extends Component {
         });
     }
 
-    componentDidUpdate(prevProps, prevState){
+    componentDidUpdate(prevProps, prevState) {
+        console.log('picker updated');
+        console.log(this.props.tasks);
+        console.log(this.props.userId);
         if (prevProps.loggedIn !== this.props.loggedIn) {
             this.returnToDefaultStyle();
         }
@@ -46,9 +48,19 @@ class Picker extends Component {
     }
 
     toggleTagSelectionPannel = () => {
-        this.setState({
-            showTagSelectionPannel: !this.state.showTagSelectionPannel
-        });
+        const buttonWrapper = document.getElementById('buttonWrapper');
+        if (buttonWrapper.style.display === "none") {
+            buttonWrapper.style.display = "block";
+        } else {
+            buttonWrapper.style.display = "none";
+        }
+        const pickerTagList = document.querySelector('#picker .tagList');
+        if (pickerTagList.style.opacity === '1') {
+            pickerTagList.style.opacity = '0';
+        } else {
+            pickerTagList.style.opacity = '1';
+        }
+
     }
 
     pickTask = () => {
@@ -83,6 +95,7 @@ class Picker extends Component {
     }
 
     execute = () => {
+        console.log(this.state.pickedTask);
         this.props.setCurrentTask(this.state.pickedTask);
         // redirect
         const areaLine = document.getElementsByClassName('area-line');
@@ -95,17 +108,11 @@ class Picker extends Component {
         titleScroll.style.transform = "translate(0, -100%)";
         template.style.transform = "translate(-100%, 0)";
 
-        // return to initial state
-        // const li2 = document.querySelector('li:nth-child(2)');
-        // li2.classList.add('transparent');
-        // this.setState({
-        //     pickedTask: null,
-        //     animationPerformed: false
-        // });
+        // return to initial style
         this.returnToDefaultStyle();
     }
 
-    animationEnd = () => {
+    animationEnd = (e) => {
         const taskDeck = document.getElementsByClassName('deckWrapper')[0];
         const taskCard = document.getElementsByClassName('transparent')[0];
         if (taskCard) {
@@ -129,9 +136,16 @@ class Picker extends Component {
                             <div className="pickerCard"></div>
                             <div className={this.state.pickedTask && this.state.pickedTask ? "pickerCard animatedCard" : "pickerCard"}
                                 onAnimationEnd={this.animationEnd}>
-                                {this.state.pickedTask && this.state.pickedTask ? <TaskObj task={this.state.pickedTask} /> : null}
+                                {this.state.pickedTask && this.state.pickedTask ? <TaskObj task={this.state.pickedTask} disableEdit={true}/> : null}
                             </div>
-                            <div className="pickerCard"></div>
+                            <div className="pickerCard">
+                                <div id='tagSelectionBtn'
+                                    onClick={this.toggleTagSelectionPannel}>
+                                    選取任務範圍
+                                    <img src={dropUp} alt="" />
+                                </div>
+                                <TagList checkTagState={this.checkTagState} noNewTag={true} /> 
+                            </div>
                             <div id='buttonWrapper'>
                                 <button id='pickerButton' onClick={this.pickTask}>
                                     {this.state.animationPerformed ? "再一次" : "挑任務"}
@@ -149,18 +163,9 @@ class Picker extends Component {
                     <li className={this.animationPerformed ? "null" : "transparent"}>
                         {this.state.pickedTask && this.state.pickedTask ? <TaskObj task={this.state.pickedTask} /> : null}
                     </li>
-                    <div id='tagSelectionBtn'
-                        onClick={this.toggleTagSelectionPannel}>
-                        選取任務範圍
-                        <img src={dropUp} alt="" />
-                    </div>
                 </ul>
 
-                {this.state.showTagSelectionPannel ?
-                    <div className='tagListWrapper'>
-                        <TagList checkTagState={this.checkTagState} noNewTag={true} />
-                    </div>
-                    : null}
+
             </div>
         )
     }
@@ -169,6 +174,7 @@ class Picker extends Component {
 const mapStateToProps = (state) => {
     return {
         loggedIn: state.firebase.auth.uid ? true : false,
+        userId: state.firebase.auth.uid,
         tasks: state.firebase.auth.uid ? state.localStore.tasks : state.firestore.ordered.defaultTasks,
         allTags: state.localStore.allTags,
         currentTask: state.localStore.currentTask
