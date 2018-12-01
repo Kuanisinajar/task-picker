@@ -29,10 +29,12 @@ class Navigation extends Component {
                     </div>
                 </div>
                 <div id="area-paging">
-                    <div className="area-line area-line-active" onClick={(e) => { this.handleSelect(e, 0) }}></div>
-                    <div className="area-line" onClick={(e) => { this.handleSelect(e, 1) }}></div>
-                    <div className="area-line" onClick={(e) => { this.handleSelect(e, 2) }}></div>
-                    <div className="area-line" onClick={(e) => { this.handleSelect(e, 3) }}></div>
+                    <div className="pagingWrapper">
+                        <div className="area-line area-line-active" onClick={(e) => { this.handleSelect(e, 0) }}></div>
+                        <div className="area-line" onClick={(e) => { this.handleSelect(e, 1) }}></div>
+                        <div className="area-line" onClick={(e) => { this.handleSelect(e, 2) }}></div>
+                        <div className="area-line" onClick={(e) => { this.handleSelect(e, 3) }}></div>
+                    </div>
                 </div>
             </div>
         )

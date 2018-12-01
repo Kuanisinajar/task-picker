@@ -13,8 +13,6 @@ const authReducer = (state = initState, action) => {
             }
 
         case "LOGIN_SUCCESS":
-            console.log("logIn success!");
-            console.log(action.data);
             return {
                 authError: null,
                 userTasks: action.data.userTasks,
@@ -22,21 +20,18 @@ const authReducer = (state = initState, action) => {
             }
         
         case "USER_DATA_LOADED":
-            console.log('we did it');
             return state;
         case "LOGOUT_SUCCESS":
-            console.log("logout success");
             return state
 
         case "SIGNUP_SUCCESS": 
-            console.log('signup success');
             return {
                 ...state,
                 authError: null
             }
 
         case "SIGNUP_ERROR": 
-            console.log('signup failed');
+            console.log(action.err.message);
             return {
                 ...state,
                 authError: action.err.message

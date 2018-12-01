@@ -6,42 +6,54 @@ import { compose } from 'redux';
 import CustomScroll from 'react-custom-scroll';
 
 
-const TaskList = ({ defaultTasks, userTasks, auth }) => {
-    const defaultObjects = defaultTasks && defaultTasks.length ? (
-        defaultTasks.map(task => {
-            return (
-                <TaskObj key={task.id} task={task} />
-            )
-        })
-    ) : (
-            <p>No Tasks!</p>
-        );
+const TaskList = ({ tasks, auth }) => {
+    // const defaultObjects = defaultTasks && defaultTasks.length ? (
+    //     defaultTasks.map(task => {
+    //         return (
+    //             <TaskObj key={task.id} task={task} />
+    //         )
+    //     })
+    // ) : (
+    //         <p>No Tasks!</p>
+    //     );
 
-    const userObjects = userTasks && userTasks.length ? (
-        userTasks.map(task => {
+    // const userObjects = userTasks && userTasks.length ? (
+    //     userTasks.map(task => {
+    //         return (
+    //             <TaskObj key={task.id} task={task} />
+    //         )
+    //     })
+    // ) : (
+    //         <p>No Tasks!</p>
+    //     );
+    const contents = tasks && tasks.length ? (
+        tasks.map(task => {
             return (
                 <TaskObj key={task.id} task={task} />
             )
         })
-    ) : (
-            <p>No Tasks!</p>
+        ) : (
+            <TaskObj key='noTasksRightNow' task={{task: '新增任務', description: '任務清單目前沒有任何任務，想想自己有什麼想做卻很久沒做的事吧！'}} />
         );
     return (
         <div id="taskList">
-            <CustomScroll heightRelativeToParent="100%">
-                {auth.uid ? userObjects : defaultObjects}
-            </CustomScroll>
+            <div className="taskWrapper">
+                <CustomScroll heightRelativeToParent="100%">
+                    {contents}
+                </CustomScroll>
+            </div>
         </div>
     );
 }
 
 const mapStateToProps = (state) => {
-    const userTasks = state.firestore.ordered.userTasks && state.firestore.ordered.userTasks.filter(task => task.ownerId === state.firebase.auth.uid);
+    // const userTasks = state.firestore.ordered.userTasks && state.firestore.ordered.userTasks.filter(task => task.ownerId === state.firebase.auth.uid);
 
     return {
-        userTasks: state.localStore.tasks,
+        tasks: state.localStore.tasks,
+        // userTasks: state.localStore.tasks,
         // userTasks: userTasks,
-        defaultTasks: state.firestore.ordered.defaultTasks,
+        //defaultTasks: state.firestore.ordered.defaultTasks,
         firestore: state.firestore,
         auth: state.firebase.auth
     }

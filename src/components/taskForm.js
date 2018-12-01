@@ -43,10 +43,7 @@ class TaskForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        // actions based on login state
-        if (this.props.auth.uid && this.state.task !== "") {
-            this.props.addTask(this.state, this.props.auth.uid)
-        }
+        this.props.addTask(this.state, this.props.auth.uid)
         this.setState({
             task: "",
             description: "",

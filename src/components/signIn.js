@@ -28,7 +28,6 @@ class SignIn extends Component {
     }
 
     render() {
-        console.log(this.props);
         if (this.props.auth.uid) {
             return <Redirect to='/' />
         }
@@ -38,10 +37,15 @@ class SignIn extends Component {
                     <Link to='/' className='closeBtn'><img src={closeImg} alt="" id='closeImg' /></Link>
                     {/* <div className='authTitle'>登入</div> */}
                     <div className="inputWrapper">
-                        <input type="text" id="email" onChange={this.handleChange} value={this.state.email} placeholder="帳號" />
-                        <input type="text" id='password' onChange={this.handleChange} value={this.state.password} placeholder="密碼" />
+                        <input type="text" id="email" onChange={this.handleChange} value={this.state.email} placeholder="帳號" autoComplete="off" />
+                        <input type="password" id='password' onChange={this.handleChange} value={this.state.password} placeholder="密碼" autoComplete="off" />
                         <button>登入</button>
                     </div>
+                    {this.props.authError ? (
+                    <div className='errMsg'>
+                        帳號或密碼錯誤
+                    </div>
+                ): null}
                 </form>
                 {/* <Link onClick={() => { this.props.signOut() }} to='/'>signout</Link> */}
             </div>

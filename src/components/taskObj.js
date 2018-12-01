@@ -3,7 +3,6 @@ import TagList from './tagList';
 import { connect } from 'react-redux';
 import { deleteTask, editTask } from '../actions/manageTask';
 import editImg from '../edit.svg';
-import closeImg from '../close.svg';
 import flagImg from '../flag.svg';
 import CustomScroll from 'react-custom-scroll';
 
@@ -89,7 +88,6 @@ class TaskObj extends Component {
     }
 
     render() {
-  
         const tagList = this.props.task.tags && this.props.task.tags.map((tag, index) => {
             return (
                 <div key={index} className="tagObj">
@@ -136,9 +134,12 @@ class TaskObj extends Component {
                         <img src={editImg} alt='' />
                     </button>
                      }
+                     { this.props.task.tags ? 
                     <button className="toggleTagsBtn" onClick={this.toggleTagList}>
                         <img src={flagImg} alt='' />
-                    </button>
+                    </button> 
+                    : null
+                     }
                 </div>
             );
 
@@ -154,8 +155,7 @@ class TaskObj extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        userId: state.firebase.auth.uid,
-        userTags: state.firestore.ordered.userTags
+        userId: state.firebase.auth.uid
     }
 }
 const mapDispatchToProps = (dispatch) => {

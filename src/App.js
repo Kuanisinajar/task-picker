@@ -7,39 +7,27 @@ import TaskList from './components/taskList';
 import Picker from './components/picker';
 import SignIn from './components/signIn';
 import SignUp from './components/signUp';
-import PersonalPanel from './components/personalPanel';
+import Header from './components/header';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { Link, NavLink } from 'react-router-dom';
-import { signIn, signOut } from './actions/authAction';
-import { loadTasksToCentral } from './actions/manageTask';
+import { signOut } from './actions/authAction';
+import { loadDataToCentral } from './actions/manageTask';
 
 
 class App extends Component {
 
   componentDidMount(){
     if (this.props.firebase.auth.uid) {
-     this.props.loadTasksToCentral(this.props.firebase.auth.uid);
+     this.props.loadDataToCentral(this.props.firebase.auth.uid);
     } else {
-      this.props.loadTasksToCentral();
+      this.props.loadDataToCentral();
     }
   }
 
   render() {
     
     // Serve different component with login state
-    const authPannel = this.props.firebase.auth.uid ? (
-      <div id='authPannel'>
-        <button onClick={() => { this.props.signOut() }}>登出</button>
-      </div>
-    ) : (
-        <div id='authPannel'>
-          <Link to="/signIn">登入</Link>
-           ｜
-          <Link to='/signUp'>註冊</Link>
-        </div>
-      );
-
+    
     return (
       <BrowserRouter>
         <div className="App">
@@ -50,7 +38,7 @@ class App extends Component {
             <li className='mainArea'><TaskList /></li>
           </ul>
           <Navigation />
-          { authPannel }
+          <Header />
           <Route path='/signIn' component={SignIn} />
           <Route path='/signUp' component={SignUp} />
           
@@ -70,7 +58,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     signOut: () => { dispatch(signOut()) },
-    loadTasksToCentral: (ownerId) => { dispatch(loadTasksToCentral(ownerId)) },
+    loadDataToCentral: (ownerId) => { dispatch(loadDataToCentral(ownerId)) },
     clearCentralTasks: () => { dispatch({ type: "CLEAR_CENTRAL_TASKS" }) }
   }
 }

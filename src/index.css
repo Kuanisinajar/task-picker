@@ -9,6 +9,7 @@ html, body {
 
 body {
   overflow: hidden;
+  background: #F6F7F8;
 }
 
 a:link,
@@ -31,6 +32,18 @@ button:focus {
 
 input:focus {
   outline: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  background-color: #F6F7F8;
 }
 
 textarea:focus {
@@ -69,14 +82,21 @@ li {
   position: relative;
 }
 
+.tagObj {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .taskObj {
   display: block;
-  width: 240px;
-  height: 291px;
+  width: 272px;
+  height: 330px;
   border: 4px solid #003049;
   -webkit-box-shadow: 0 0 60px -32px;
   box-shadow: 0 0 60px -32px;
-  margin: 72px;
+  margin: 48px;
 }
 
 .taskObj .tagObj {
@@ -129,6 +149,7 @@ li {
 .taskObjWrapper .description {
   padding: 0 24px;
   font-size: 12px;
+  line-height: 20px;
 }
 
 .taskObjWrapper button {
@@ -177,8 +198,15 @@ li {
   position: relative;
 }
 
-#taskList .taskObj {
+#taskList .taskWrapper {
   float: right;
+  width: 80%;
+  height: calc(100% - 64px);
+  padding-top: 64px;
+}
+
+#taskList .taskObj {
+  float: left;
 }
 
 #taskForm {
@@ -347,7 +375,7 @@ li {
   display: inline-block;
   margin: 8px;
   padding: 4px 8px;
-  border: 1px solid black;
+  border: 1px solid #003049;
   background: #F6F7F8;
   font-size: 10px;
   cursor: pointer;
@@ -362,6 +390,14 @@ li {
   background: #F6F7F8;
 }
 
+.tagInput img {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  -o-object-fit: contain;
+  object-fit: contain;
+}
+
 .tagInput input {
   width: 96px;
   border: none;
@@ -370,22 +406,22 @@ li {
 
 #nav {
   display: block;
-  width: 100%;
-  height: 10%;
-  border-top: 0.5px solid rgba(11, 11, 11, 0.5);
+  width: 50%;
+  height: 12%;
   margin: 0;
   padding: 0;
   position: fixed;
   bottom: 0;
   z-index: 100;
-  background: white;
+  background: transparent;
 }
 
 #area-titles {
   display: block;
-  width: 20%;
+  float: left;
   height: 85%;
-  padding-left: 4%;
+  margin-left: 48px;
+  margin-right: 24px;
   position: relative;
   top: 50%;
   left: 0;
@@ -393,6 +429,10 @@ li {
   -ms-transform: translate(0, -50%);
   transform: translate(0, -50%);
   overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #area-titles #title-scroll {
@@ -420,36 +460,56 @@ li {
   -webkit-transform: translate(0, -50%);
   -ms-transform: translate(0, -50%);
   transform: translate(0, -50%);
+  color: #003049;
+  font-weight: 600;
 }
 
 #area-paging {
   display: block;
-  position: absolute;
+  float: left;
+  height: 85%;
+  position: relative;
   top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  left: 0;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+}
+
+#area-paging .pagingWrapper {
+  position: relative;
+  top: 52%;
+  left: 0;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
 }
 
 .area-line {
   display: inline-block;
-  width: 5px;
-  height: 5px;
-  margin: 20px;
-  border-radius: 20px;
-  background: grey;
-  -webkit-transition: 1s;
-  -o-transition: 1s;
-  transition: 1s;
+  width: 6px;
+  height: 6px;
+  margin: 8px;
+  border-radius: 3px;
+  -webkit-transform-origin: bottom left;
+  -ms-transform-origin: bottom left;
+  transform-origin: bottom left;
+  background: #8BA0AC;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
   cursor: pointer;
 }
 
+.area-line:hover {
+  width: 12px;
+}
+
 .area-line-active {
-  width: 20px;
-  height: 5px;
+  width: 12px;
+  height: 6px;
   border-radius: 20px;
-  background: black;
+  background: #003049;
 }
 
 #profile-pic {
@@ -464,15 +524,44 @@ li {
   right: 2%;
 }
 
+#header span {
+  position: fixed;
+  top: 24px;
+  left: 48px;
+  font-weight: 600;
+  color: #8BA0AC;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#header span:hover {
+  color: #003049;
+}
+
 #authPannel {
   position: fixed;
   top: 24px;
-  right: 72px;
+  right: 48px;
   font-size: 14px;
+  color: #8BA0AC;
 }
 
-#authPannel button {
+#authPannel button,
+#authPannel a {
   font-size: 14px;
+  color: #8BA0AC;
+}
+
+#authPannel button:hover,
+#authPannel a:hover {
+  color: #003049;
+}
+
+#authPannel a {
+  padding: 0 4px;
 }
 
 #signInForm, #signUpForm {
@@ -486,8 +575,8 @@ li {
 }
 
 #signInForm form, #signUpForm form {
-  width: 384px;
-  height: 465.6px;
+  width: 435.2px;
+  height: 528px;
   border: 4px solid #003049;
   position: absolute;
   top: 50%;
@@ -570,6 +659,16 @@ li {
   object-fit: contain;
 }
 
+#signInForm .errMsg, #signUpForm .errMsg {
+  width: 100%;
+  margin: 16px 0;
+  position: absolute;
+  bottom: 0;
+  color: #D0104C;
+  text-align: center;
+  font-size: 14px;
+}
+
 ::-webkit-input-placeholder {
   padding: 20px;
 }
@@ -639,21 +738,6 @@ li {
   transform: rotate(-45deg);
 }
 
-.closeBtn:hover .bar {
-  width: 24px;
-  -webkit-transition: 0.2s ease;
-  -o-transition: 0.2s ease;
-  transition: 0.2s ease;
-}
-
-.closeBtn:hover .bar::after,
-.closeBtn:hover .bar::before {
-  background: black;
-  -webkit-transition: 0.2s ease;
-  -o-transition: 0.2s ease;
-  transition: 0.2s ease;
-}
-
 #picker .deck {
   position: absolute;
   top: 50%;
@@ -665,12 +749,18 @@ li {
 
 #picker .taskObj {
   float: left;
+  margin: 0 72px;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
 }
 
 #picker .deckWrapper {
   float: left;
-  width: 248px;
-  height: 299px;
+  width: 280px;
+  height: 338px;
   margin: 72px;
   -webkit-transition: 1s ease;
   -o-transition: 1s ease;
@@ -725,14 +815,38 @@ li {
   -webkit-transition: 0.3s ease;
   -o-transition: 0.3s ease;
   transition: 0.3s ease;
+  -webkit-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+}
+
+#picker .flip {
+  -webkit-transform: rotate(180deg) translate(0, 16%);
+  -ms-transform: rotate(180deg) translate(0, 16%);
+  transform: rotate(180deg) translate(0, 16%);
 }
 
 #picker .pickerCard {
-  width: 240px;
-  height: 291px;
+  width: 272px;
+  height: 330px;
   border: 4px solid #003049;
   position: absolute;
   background: #F6F7F8;
+  -webkit-transition: 0.3s ease;
+  -o-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+
+#picker .deckWrapper:hover .pickerCard:nth-child(1) {
+  -webkit-transform: rotate(-4deg) translate(-40px, -40px);
+  -ms-transform: rotate(-4deg) translate(-40px, -40px);
+  transform: rotate(-4deg) translate(-40px, -40px);
+}
+
+#picker .deckWrapper:hover .pickerCard:nth-child(2) {
+  -webkit-transform: rotate(-2deg) translate(-20px, -20px);
+  -ms-transform: rotate(-2deg) translate(-20px, -20px);
+  transform: rotate(-2deg) translate(-20px, -20px);
 }
 
 #picker .pickerCard:nth-child(2) {
@@ -777,6 +891,10 @@ li {
   opacity: 0;
 }
 
+#picker .tagObj {
+  cursor: default;
+}
+
 @-webkit-keyframes pickerAnimation_card {
   0% {
   }
@@ -789,8 +907,8 @@ li {
     transform: translate(16px, -32px) rotate(4deg);
   }
   100% {
-    -webkit-transform: translate(392px, 0px) rotate(0deg);
-    transform: translate(392px, 0px) rotate(0deg);
+    -webkit-transform: translate(424px, 0px) rotate(0deg);
+    transform: translate(424px, 0px) rotate(0deg);
   }
 }
 
@@ -806,19 +924,19 @@ li {
     transform: translate(16px, -32px) rotate(4deg);
   }
   100% {
-    -webkit-transform: translate(392px, 0px) rotate(0deg);
-    transform: translate(392px, 0px) rotate(0deg);
+    -webkit-transform: translate(424px, 0px) rotate(0deg);
+    transform: translate(424px, 0px) rotate(0deg);
   }
 }
 
 @-webkit-keyframes pickerAnimation_deck {
   0% {
-    -webkit-transform: translate(196px, 0);
-    transform: translate(196px, 0);
+    -webkit-transform: translate(212px, 0);
+    transform: translate(212px, 0);
   }
   20% {
-    -webkit-transform: translate(196px, 0);
-    transform: translate(196px, 0);
+    -webkit-transform: translate(212px, 0);
+    transform: translate(212px, 0);
   }
   100% {
     -webkit-transform: none;
@@ -828,12 +946,12 @@ li {
 
 @keyframes pickerAnimation_deck {
   0% {
-    -webkit-transform: translate(196px, 0);
-    transform: translate(196px, 0);
+    -webkit-transform: translate(212px, 0);
+    transform: translate(212px, 0);
   }
   20% {
-    -webkit-transform: translate(196px, 0);
-    transform: translate(196px, 0);
+    -webkit-transform: translate(212px, 0);
+    transform: translate(212px, 0);
   }
   100% {
     -webkit-transform: none;

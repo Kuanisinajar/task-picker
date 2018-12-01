@@ -24,9 +24,6 @@ class Picker extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('picker updated');
-        console.log(this.props.tasks);
-        console.log(this.props.userId);
         if (prevProps.loggedIn !== this.props.loggedIn) {
             this.returnToDefaultStyle();
         }
@@ -60,7 +57,14 @@ class Picker extends Component {
         } else {
             pickerTagList.style.opacity = '1';
         }
-
+        const pickerTags = document.querySelectorAll('#picker .tagObj');
+        if (pickerTags[0].style.cursor === 'pointer') {
+            pickerTags.forEach((item) => { item.style.cursor = 'default' });
+        } else {
+            pickerTags.forEach((item) => { item.style.cursor = 'pointer' });
+        }
+        const dropUpImg = document.querySelector('#tagSelectionBtn img');
+        dropUpImg.classList.toggle('flip');
     }
 
     pickTask = () => {
@@ -88,10 +92,26 @@ class Picker extends Component {
         }
 
         // pick and set the task
-        const tasks = [...this.props.tasks];
-        this.setState({
-            pickedTask: tasks[Math.floor(Math.random() * tasks.length)]
-        });
+        const noMatchMsg = {
+            task: '噢不', 
+            description: '沒有配對到的任務呢 :(',
+            id: 'noMatchInPicker'
+        }
+        if (this.state.selectedTags.length !== 0 && options.length === 0) {
+            console.log('nomatch');
+            this.setState({
+                pickedTask: noMatchMsg
+            });
+        } else if (options.length === 0) {
+            const tasks = [...this.props.tasks];
+            this.setState({
+                pickedTask: tasks[Math.floor(Math.random() * tasks.length)]
+            });
+        } else {
+            this.setState({
+                pickedTask: options[Math.floor(Math.random() * options.length)]
+            });
+        }
     }
 
     execute = () => {
@@ -136,7 +156,7 @@ class Picker extends Component {
                             <div className="pickerCard"></div>
                             <div className={this.state.pickedTask && this.state.pickedTask ? "pickerCard animatedCard" : "pickerCard"}
                                 onAnimationEnd={this.animationEnd}>
-                                {this.state.pickedTask && this.state.pickedTask ? <TaskObj task={this.state.pickedTask} disableEdit={true}/> : null}
+                                {this.state.pickedTask && this.state.pickedTask ? <TaskObj task={this.state.pickedTask} disableEdit={true} /> : null}
                             </div>
                             <div className="pickerCard">
                                 <div id='tagSelectionBtn'
@@ -144,7 +164,7 @@ class Picker extends Component {
                                     選取任務範圍
                                     <img src={dropUp} alt="" />
                                 </div>
-                                <TagList checkTagState={this.checkTagState} noNewTag={true} /> 
+                                <TagList checkTagState={this.checkTagState} noNewTag={true} />
                             </div>
                             <div id='buttonWrapper'>
                                 <button id='pickerButton' onClick={this.pickTask}>
@@ -161,7 +181,7 @@ class Picker extends Component {
                         </div>
                     </li>
                     <li className={this.animationPerformed ? "null" : "transparent"}>
-                        {this.state.pickedTask && this.state.pickedTask ? <TaskObj task={this.state.pickedTask} /> : null}
+                        {this.state.pickedTask && this.state.pickedTask ? <TaskObj task={this.state.pickedTask} disableEdit={true} /> : null}
                     </li>
                 </ul>
 
@@ -176,7 +196,7 @@ const mapStateToProps = (state) => {
         loggedIn: state.firebase.auth.uid ? true : false,
         userId: state.firebase.auth.uid,
         tasks: state.firebase.auth.uid ? state.localStore.tasks : state.firestore.ordered.defaultTasks,
-        allTags: state.localStore.allTags,
+        allTags: state.firebase.auth.uid ? state.localStore.allTags : state.firestore.ordered.defaultTags,
         currentTask: state.localStore.currentTask
     }
 }

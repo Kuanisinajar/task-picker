@@ -2,8 +2,10 @@ $mainColor: rgb(255, 230, 70);
 $deepBlue : #003049;
 $ourWhite: #F6F7F8;
 $ourOrange: #F77F00;
-$cardWidth: 240px;
-$cardHeight: 291px;
+$ourGrey: #8BA0AC;
+$ourRed: #D0104C;
+$cardWidth: 272px;
+$cardHeight: 330px;
 
 html, body {
     width: 100%;
@@ -16,6 +18,7 @@ html, body {
 
 body {
     overflow: hidden;
+    background: $ourWhite;
 }
 
 // Clear default a, button and input style
@@ -38,6 +41,17 @@ button:focus {
 
 input:focus {
     outline: none;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    background-color: $ourWhite;
 }
 textarea:focus {
     outline: none;
@@ -71,6 +85,12 @@ li {
     }
 }
 
+// Tag Obj
+
+.tagObj {
+    user-select: none;
+}
+
 // Task Object 
 .taskObj {
     display: block;
@@ -78,7 +98,7 @@ li {
     height: $cardHeight;
     border: 4px solid $deepBlue;
     box-shadow: 0 0 60px -32px;
-    margin: 72px;
+    margin: 48px;
 
     .tagObj {
         cursor: default;
@@ -122,6 +142,7 @@ li {
     .description {
         padding: 0 24px;
         font-size: 12px;
+        line-height: 20px;
     }
     button {
         width: 32px;
@@ -158,10 +179,15 @@ li {
 // Task List -- Task List contains several task objects 
 
 #taskList {
-    // overflow-y: scroll;
     position: relative;
-    .taskObj {
+    .taskWrapper {
         float: right;
+        width: 80%;
+        height: calc(100% - 64px);
+        padding-top: 64px;
+    }
+    .taskObj {
+        float: left;
     }
 }
 
@@ -302,7 +328,7 @@ li {
     display: inline-block;
     margin: 8px;
     padding: 4px 8px;
-    border: 1px solid black;
+    border: 1px solid $deepBlue;
     background: $ourWhite;
     font-size: 10px;
     cursor: pointer;
@@ -315,6 +341,12 @@ li {
 
 .tagInput {
     background: $ourWhite;
+    img {
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+        object-fit: contain;
+    }
 }
 .tagInput input {
     width: 96px;
@@ -326,27 +358,29 @@ li {
 
 #nav{
     display: block;
-    width: 100%;
-    height: 10%;
-    border-top: 0.5px solid rgba(11, 11, 11, 0.5);
+    width: 50%;
+    height: 12%;
+    // border-top: 0.5px solid rgba(11, 11, 11, 0.5);
     margin: 0;
     padding: 0;
     position: fixed;
     bottom: 0;
     z-index: 100;
-    background: white;
+    background: transparent;
 }
 
 #area-titles {
     display: block;
-    width: 20%;
+    float: left;
     height: 85%;
-    padding-left: 4%;
+    margin-left: 48px;
+    margin-right: 24px;
     position: relative;
     top: 50%;
     left: 0;
     transform: translate(0, -50%);
     overflow: hidden;
+    user-select: none;
     
     #title-scroll {
         width: 100%;
@@ -366,34 +400,50 @@ li {
             position: relative;
             top: 50%;
             transform: translate(0, -50%);
+            color: $deepBlue;
+            font-weight: 600;
         }
     }
 }
 
 #area-paging {
     display: block;
-    position: absolute;
+    float: left;
+    height: 85%;
+    position: relative;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: 0;
+    transform: translate(0, -50%);
+
+    .pagingWrapper {
+        position: relative;
+        top: 52%;
+        left: 0;
+        transform: translate(0, -50%);
+    }
 }
 
 .area-line {
     display: inline-block;
-    width: 5px;
-    height: 5px;
-    margin: 20px;
-    border-radius: 20px;
-    background: grey;
-    transition: 1s;
+    width: 6px;
+    height: 6px;
+    margin: 8px;
+    border-radius: 3px;
+    transform-origin: bottom left;
+    background: $ourGrey;
+    transition: 0.3s;
     cursor: pointer;
 }
 
+.area-line:hover {
+    width: 12px;
+}
+
 .area-line-active {
-    width: 20px;
-    height: 5px;
+    width: 12px;
+    height: 6px;
     border-radius: 20px;
-    background: black;
+    background: $deepBlue;
 }
 
 // Personal Panel
@@ -410,18 +460,45 @@ li {
     right: 2%;
 }
 
-// Auth Pannel
+// Header 
+
+#header {
+    span {
+        position: fixed;
+        top: 24px;
+        left: 48px;
+        font-weight: 600;
+        color: $ourGrey;
+        cursor: default;
+        user-select: none;
+    }
+
+    span:hover {
+        color: $deepBlue;
+    }
+}
 
 #authPannel {
     position: fixed;
     top: 24px;
-    right: 72px;
+    right: 48px;
     font-size: 14px;
-
-    button {
+    color: $ourGrey;
+    button,
+    a {
         font-size: 14px;
+        color: $ourGrey;
+    }
+    button:hover,
+    a:hover {
+        color: $deepBlue;
+    }
+    a {
+        padding: 0 4px;
     }
 }
+
+// Sign form
 
 #signInForm, #signUpForm {
     width: 100%;
@@ -493,6 +570,16 @@ li {
         height: 24px;
         object-fit: contain;
     }
+
+    .errMsg {
+        width: 100%;
+        margin: 16px 0;
+        position: absolute;
+        bottom: 0;
+        color: $ourRed;
+        text-align: center;
+        font-size: 14px;
+    }
 }
 
 
@@ -541,18 +628,6 @@ li {
     transform: rotate(-45deg);
 }
 
-.closeBtn:hover .bar {
-    width: 24px;
-    transition: 0.2s ease;
-}
-.closeBtn:hover .bar::after,
-.closeBtn:hover .bar::before{
-    background: black;
-    transition: 0.2s ease;
-}
-
-
-
 
 // Picker 
 
@@ -566,20 +641,15 @@ li {
     }
     .taskObj {
         float: left;
-        // margin: 0;
-        // position: absolute;
-        // top: 50%;
-        // left: 50%;
-        // transform: translate(-50%, -50%);
+        margin: 0 72px;
+        position: relative;
+        top: 50%;
+        transform: translate(0, -50%);
     }
     .deckWrapper {
         float: left;
         width: $cardWidth + 8px;
         height: $cardHeight + 8px;
-        // position: absolute;
-        // top: 50%;
-        // left: 50%;
-        // transform: translate(-50%, -50%);
         margin: 72px;
         transition: 1s ease;
     }
@@ -626,14 +696,25 @@ li {
         object-fit: contain;
         vertical-align: middle;
         transition: 0.3s ease;
+        transform-origin: 50% 50%;
     }
 
+    .flip {
+        transform: rotate(180deg) translate(0, 16%);
+    }
     .pickerCard {
         width: $cardWidth;
         height: $cardHeight;
         border: 4px solid $deepBlue;
         position: absolute;
         background: $ourWhite;
+        transition: 0.3s ease;
+    }
+    .deckWrapper:hover .pickerCard:nth-child(1) {
+        transform: rotate(-4deg) translate(-40px, -40px);
+    }
+    .deckWrapper:hover .pickerCard:nth-child(2) {
+        transform: rotate(-2deg) translate(-20px, -20px);
     }
 
     .pickerCard:nth-child(2) {
@@ -659,32 +740,13 @@ li {
     .isAnimating {
         animation: pickerAnimation_deck 3s;
     }
-
-    // Tag List in picker
-    // .tagListWrapper {
-    //     width: 80%;
-    //     height: $cardWidth + 72px + 32px + 8px + 16px;
-    //     margin: auto;
-    //     position: absolute;
-    //     top: 50%;
-    //     left: 50%;
-    //     transform: translate(-50%, -50%);
-    //     background: $ourOrange;
-    // }
-    // .tagList {
-    //     width: 50%;
-    //     padding: 24px 24px;
-    //     position: relative;
-    //     top: 50%;
-    //     left: 50%;
-    //     transform: translate(-50%, -50%);
-
-    //     text-align: center;
-    // }
     .tagList {
         width: 100%;
         height: 80%;
         opacity: 0;
+    }
+    .tagObj {
+        cursor: default;
     }
 }
 
@@ -696,8 +758,8 @@ li {
 }
 
 @keyframes pickerAnimation_deck {
-    0% { transform: translate($cardWidth - 44px, 0) }
-    20% { transform: translate($cardWidth - 44px, 0) }
+    0% { transform: translate($cardWidth - 60px, 0) }
+    20% { transform: translate($cardWidth - 60px, 0) }
     100% {transform: none}
     
 }

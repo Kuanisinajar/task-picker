@@ -5,6 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { addTag } from '../actions/addTag';
 import CustomScroll from 'react-custom-scroll';
+import addIcon from '../add.svg';
 
 
 class TagList extends Component {
@@ -26,7 +27,7 @@ class TagList extends Component {
     }
 
     handleSubmit = (e) => {
-        this.props.addTag(this.state.tag);
+        this.props.addTag(this.state.tag, this.props.auth.uid);
         this.setState({
             tag: {
                 ...this.state.tag,
@@ -49,12 +50,12 @@ class TagList extends Component {
         const newTagForm = this.state.noNewTag ? null : (
             <div className="tagInput tagObj">
                 <input type="text" onChange={this.handleChange} value={this.state.tag.tag} placeholder="新標籤" />
-                <span onClick={this.handleSubmit}>submit</span>
+                <span onClick={this.handleSubmit}><img src={addIcon} alt=""/></span>
             </div>
         )
 
-        const userContent = this.props.userTags ? (
-            this.props.userTags.map((tag, index) => {
+        const content = this.props.tags && this.props.tags.length ? (
+            this.props.tags.map((tag, index) => {
                 const active = this.props.editingTaskTags && this.matchWithEditingTaskTag(tag.tag, this.props.editingTaskTags);
                 return (
                     <TagObj tag={tag.tag}
@@ -63,27 +64,14 @@ class TagList extends Component {
                         active={active} />
                 )
             })
-        ) : (
-                <p>No tags</p>
-            );
+        ) : null;
 
-        const defaultContent = this.props.defaultTags && this.props.defaultTags ? (
-            this.props.defaultTags.map((tag, index) => {
-                return (
-                    <TagObj tag={tag.tag}
-                        checkTagState={this.props.checkTagState}
-                        key={index} />
-                )
-            })
-        ) : (
-                <p>No tags</p>
-            );
 
         return (
             <div className="tagList">
                 <CustomScroll heightRelativeToParent="100%">
                     {newTagForm}
-                    {this.props.auth.uid ? userContent : defaultContent}
+                    {content}
                 </CustomScroll>
             </div>
         )
@@ -92,9 +80,9 @@ class TagList extends Component {
 
 
 const mapStateToProps = (state) => {
-    const userTags = state.firestore.ordered.userTags && state.firestore.ordered.userTags.filter(tag => tag.ownerId === state.firebase.auth.uid);
+    // const userTags = state.firestore.ordered.userTags && state.firestore.ordered.userTags.filter(tag => tag.ownerId === state.firebase.auth.uid);
     return {
-        userTags: userTags,
+        tags: state.localStore.allTags,
         defaultTags: state.firestore.ordered.defaultTags,
         auth: state.firebase.auth,
         firestore: state.firestore
@@ -103,7 +91,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addTag: (tag) => { dispatch(addTag(tag)) }
+        addTag: (tag, userId) => { dispatch(addTag(tag, userId)) }
     }
 }
 

@@ -32,11 +32,16 @@ class SignUp extends Component {
                     {/* <div className='authTitle'>加入吧！</div> */}
                     <Link to='/' className='closeBtn'><img src={closeImg} alt="" id='closeImg' /></Link>
                     <div className="inputWrapper">
-                        <input type="text" id="email" onChange={this.handleChange} value={this.state.email} placeholder="輸入信箱" />
-                        <input type="text" id='password' onChange={this.handleChange} value={this.state.password} placeholder="輸入密碼" />
-                        <input type="text" id="name" onChange={this.handleChange} value={this.state.name} placeholder="你的名字" />
+                        <input type="text" id="email" onChange={this.handleChange} value={this.state.email} placeholder="輸入信箱" autoComplete="off" />
+                        <input type="text" id='password' onChange={this.handleChange} value={this.state.password} placeholder="輸入至少六位數密碼" autoComplete="off" />
+                        <input type="text" id="name" onChange={this.handleChange} value={this.state.name} placeholder="你的名字" autoComplete="off" />
                         <button>註冊</button>
                     </div>
+                    {this.props.authError ? (
+                    <div className='errMsg'>
+                        {this.props.authError}
+                    </div>
+                ): null}
                 </form>
             </div>
         )
